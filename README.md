@@ -11,6 +11,10 @@ python佔存檔案也不會被git追蹤了</br>
 分工：</br>
 設計稿--Eden</br>
 前端切版--Eden</br>
-fetch資料--LiangHua</br>
+js功能</br>
+  * create 動態生成畫面函式--maybe Eden</br>
+  * fetch 資料函式--LiangHua</br>
+  * render 畫面函式--LiangHua</br>
+  
 台灣地圖--LiangHua</br>
 後端API--YunChie</br>
