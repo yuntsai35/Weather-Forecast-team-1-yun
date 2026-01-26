@@ -1,0 +1,16 @@
+body {
+  background-color: lightblue;
+}
+/* svg {
+  width: 800px;
+  height: 600px;
+  border: 1px solid #999;
+} */
+.county {
+  fill: #ebf0e4;
+  stroke: gray;
+  stroke-width: 0.1px;
+}
+.county:hover {
+  fill: lightgray;
+}
