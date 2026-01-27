@@ -24,7 +24,7 @@ api_key=os.getenv("CWB_API_KEY")
 
 #一般天氣預報-今明36小時天氣預報
 @app.get("/v1/rest/datastore/F-C0032-001")
-async def attraction(request: Request):
+async def get_weather_36h(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={api_key}&format=JSON'
     response=remote_requests.get(url)
@@ -81,7 +81,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-宜蘭縣未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-003")
-async def attraction(request: Request):
+async def get_yilan_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-003?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -141,7 +141,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-桃園市未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-007")
-async def attraction(request: Request):
+async def get_taoyuan_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-007?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -202,7 +202,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-新竹縣未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-011")
-async def attraction(request: Request):
+async def get_hsinchu_county_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-011?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -263,7 +263,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-苗栗縣未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-015")
-async def attraction(request: Request):
+async def get_miaoli_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-015?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -324,7 +324,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-彰化縣未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-019")
-async def attraction(request: Request):
+async def get_changhua_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-019?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -384,7 +384,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-南投縣未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-023")
-async def attraction(request: Request):
+async def get_nantou_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-023?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -445,7 +445,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-雲林縣未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-027")
-async def attraction(request: Request):
+async def get_yunlin_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-027?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -506,7 +506,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-嘉義縣未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-031")
-async def attraction(request: Request):
+async def get_chiayi_county_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-031?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -567,7 +567,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-屏東縣未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-035")
-async def attraction(request: Request):
+async def get_pingtung_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-035?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -628,7 +628,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-臺東縣未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-039")
-async def attraction(request: Request):
+async def get_taitung_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-039?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -689,7 +689,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-花蓮縣未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-043")
-async def attraction(request: Request):
+async def get_hualien_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-043?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -749,7 +749,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-澎湖縣未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-047")
-async def attraction(request: Request):
+async def get_penghu_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-047?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -809,7 +809,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-基隆市未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-051")
-async def attraction(request: Request):
+async def get_keelung_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-051?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -869,7 +869,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-新竹市未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-055")
-async def attraction(request: Request):
+async def get_hsinchu_city_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-055?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -929,7 +929,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-嘉義市未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-059")
-async def attraction(request: Request):
+async def get_chiayi_city_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-059?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -989,7 +989,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-台北市未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-063")
-async def attraction(request: Request):
+async def get_taipei_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-063?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -1049,7 +1049,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-高雄市未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-067")
-async def attraction(request: Request):
+async def get_kaohsiung_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-067?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -1109,7 +1109,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-新北市未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-071")
-async def attraction(request: Request):
+async def get_new_taipei_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-071?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -1169,7 +1169,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-台中市未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-075")
-async def attraction(request: Request):
+async def get_taichung_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-075?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -1229,7 +1229,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-台南市未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-079")
-async def attraction(request: Request):
+async def get_tainan_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-079?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -1289,7 +1289,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-連江縣未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-083")
-async def attraction(request: Request):
+async def get_lienchiang_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-083?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -1349,7 +1349,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-金門縣未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-087")
-async def attraction(request: Request):
+async def get_kinmen_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-087?Authorization={api_key}'
     data=remote_requests.get(url)
@@ -1410,7 +1410,7 @@ async def attraction(request: Request):
 #鄉鎮天氣預報-台灣全島縣市未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-091")
-async def attraction(request: Request):
+async def get_taiwan_weekly(request: Request):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization={api_key}'
     data=remote_requests.get(url)
