@@ -1,16 +1,45 @@
-body {
-  background-color: lightblue;
+.topbar__whole {
+  width: 1920px;
+  display: flex;
+  justify-content: center;
+  background-color: gainsboro;
 }
-/* svg {
-  width: 800px;
-  height: 600px;
-  border: 1px solid #999;
-} */
+.topbar {
+  width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.leftTitle {
+  font-size: 16px;
+}
+.mapInformation {
+  width: 1200px;
+  height: 960px;
+  display: flex;
+}
+.map__left {
+  width: 50%;
+  height: 800px;
+  overflow: hidden;
+  border: 1px solid black;
+}
+.cityInformation__right {
+  display: block;
+}
+svg {
+  align-items: center;
+  display: flex;
+}
+g {
+  align-items: center;
+  justify-content: center;
+}
 .county {
-  fill: #ebf0e4;
-  stroke: gray;
-  stroke-width: 0.1px;
+  fill: white;
+  stroke: black;
+  stroke-width: 1px;
 }
 .county:hover {
-  fill: lightgray;
+  fill: #977c00;
 }

@@ -9,7 +9,20 @@
     <script src="map.js" defer></script>
   </head>
   <body>
-    <h1>Taiwan Map</h1>
-    <svg width="900" height="1200"></svg>
+    <div class="topbar__whole">
+      <div class="topbar">
+        <h1 class="leftTitle">全國即時氣象</h1>
+        <div class="searchBar">
+          <input type="text" placeholder="請輸入關鍵字" />
+          <button type="button"></button>
+        </div>
+      </div>
+    </div>
+    <div class="mapInformation">
+      <div class="map__left">
+        <svg width="1200" height="1500"></svg>
+      </div>
+      <div class="cityInformation__right"></div>
+    </div>
   </body>
 </html>
