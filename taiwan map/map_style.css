@@ -18,18 +18,18 @@
 }
 .main {
   width: 1920px;
-  margin-top: 200px;
+  /* margin-top: 200px; */
   display: flex;
   justify-content: center;
 }
 .mapInformation {
   width: 1200px;
-  height: 960px;
+  height: 1000px;
   display: flex;
 }
 .map__left {
   width: 50%;
-  height: 500px;
+  height: 1000px;
   overflow: hidden;
   position: relative;
   /* border: 1px solid black; */
@@ -40,6 +40,7 @@
   overflow: hidden;
   position: absolute;
   bottom: 60%;
+  left: 25%;
   border: 1px solid black;
   z-index: 10;
 }
@@ -49,13 +50,16 @@
   overflow: hidden;
   position: absolute;
   bottom: 45%;
+  left: 25%;
   border: 1px solid black;
   z-index: 10;
 }
 .cityInformation__right {
-  display: block;
   width: 50%;
-  height: 500px;
+  height: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .county {
   fill: white;
@@ -80,4 +84,31 @@
 }
 .country2:hover {
   fill: #977c00;
+}
+.cityInformation__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cityInformation__content p {
+  color: grey;
+  font-size: 16px;
+  font-weight: 400;
+}
+.informationBar {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+#weatherBtn {
+  width: 50%;
+  background-color: #98c1d9;
+  border: 1px solid white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
 }

@@ -29,7 +29,7 @@ d3.json("./map_data/COUNTY_MOI_1140317.json").then((data) => {
     .append("title")
     .text((d) => d.properties.COUNTYNAME); // tooltip
 
-  g.attr("transform", "translate(-580, 1) scale(1.2)");
+  g.attr("transform", "translate(-980, 100) scale(1.5)");
 });
 
 // 連江縣
