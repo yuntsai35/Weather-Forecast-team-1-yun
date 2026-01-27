@@ -18,6 +18,7 @@
 }
 .main {
   width: 1920px;
+  margin-top: 200px;
   display: flex;
   justify-content: center;
 }
@@ -31,14 +32,14 @@
   height: 500px;
   overflow: hidden;
   position: relative;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 .map__small--up {
   width: 150px;
   height: 100px;
   overflow: hidden;
   position: absolute;
-  bottom: 78%;
+  bottom: 60%;
   border: 1px solid black;
   z-index: 10;
 }
@@ -47,7 +48,7 @@
   height: 80px;
   overflow: hidden;
   position: absolute;
-  bottom: 68%;
+  bottom: 45%;
   border: 1px solid black;
   z-index: 10;
 }
