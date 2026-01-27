@@ -24,9 +24,13 @@ api_key=os.getenv("CWB_API_KEY")
 
 #一般天氣預報-今明36小時天氣預報
 @app.get("/v1/rest/datastore/F-C0032-001")
-async def get_weather_36h(request: Request):
+async def get_weather_36h(request: Request, locationName: str=None):
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={api_key}&format=JSON'
+    
+    if locationName:
+       url += f'&locationName={locationName}'
+    
     response=remote_requests.get(url)
 
     if response.status_code != 200:
@@ -144,16 +148,65 @@ def data_process(data_json):
 #鄉鎮天氣預報-鄉鎮市區未來一週天氣預報
 #平均相對濕度, 12小時降雨機率, 平均溫度, 天氣現象(未來一周)
 @app.get("/v1/rest/datastore/F-D0047-{city_id}")
-async def get_weekly_forecast(city_id: str):
+async def get_weekly_forecast(city_id: str, LocationName: str = None):
 
     if city_id not in city_codes:
         return JSONResponse(status_code=404, content={"success": False, "message": "無效的縣市代碼"})
 
     url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-{city_id}?Authorization={api_key}'
+
+    if LocationName:
+      url += f'&LocationName={LocationName}'
+
     data=remote_requests.get(url)
     data_json = data.json()
 
     processed_data = data_process(data_json)
 
     return {"success": True, "data": processed_data}
+
+
+
+#Rain Amount
+@app.get("/v1/rest/datastore/O-A0002-001")
+async def get_rain_amount(request: Request, station_id: str = None):
+    url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/O-A0002-001?Authorization={api_key}'
     
+    if station_id:
+        url += f'&StationId={station_id}'
+
+    data=remote_requests.get(url)
+    data_json = data.json()
+    
+    if 'Station' not in data_json['records']:
+        return {"success": False, "message": "找不到對應的站點資料"}
+
+    data_json = data_json['records']['Station']
+    
+    Rainfall_data=[]
+
+    for item in data_json:
+        #place
+        CountyName=item['GeoInfo']['CountyName']
+        TownName=item['GeoInfo']['TownName']
+        StationName = item['StationName'] 
+        StationId = item['StationId']
+
+        #rain info
+        RainfallElement=item['RainfallElement']
+        Now=RainfallElement['Now']['Precipitation']
+        Past10Min=RainfallElement['Past10Min']['Precipitation']
+        Past1hr=RainfallElement['Past1hr']['Precipitation']
+        Past3hr=RainfallElement['Past3hr']['Precipitation']
+        Past6Hr=RainfallElement['Past6Hr']['Precipitation']
+        Past12hr=RainfallElement['Past12hr']['Precipitation']
+        Past24hr=RainfallElement['Past24hr']['Precipitation']
+        Past2days=RainfallElement['Past2days']['Precipitation']
+        Past3days=RainfallElement['Past3days']['Precipitation']   
+        
+        data={"CountyName":CountyName, "TownName":TownName, "StationName": StationName, "StationId": StationId, "Now":Now, "Past10Min":Past10Min,
+              "Past1hr":Past1hr, "Past3hr":Past3hr,"Past6Hr":Past6Hr, "Past12hr":Past12hr,"Past24hr":Past24hr, "Past2days":Past2days,"Past3days":Past3days}
+
+        Rainfall_data.append(data)
+
+    return {"success": True, "data": Rainfall_data}
