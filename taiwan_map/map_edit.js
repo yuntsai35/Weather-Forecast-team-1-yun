@@ -6,7 +6,7 @@ const width = +svg.attr("width");
 const height = +svg.attr("height");
 
 // 本島+澎湖
-d3.json("./map_data/COUNTY_MOI_1140317.json").then((data) => {
+d3.json("./map_data_edit/COUNTY_MOI_1140317.json").then((data) => {
   console.log(data);
   const testData = data.features[0];
   data.features.splice(0, 1);
@@ -38,7 +38,7 @@ const svg1 = d3.select(".svg__small--z");
 const g1 = svg1.append("g");
 const width1 = +svg1.attr("width");
 const height1 = +svg1.attr("height");
-d3.json("./map_data/COUNTY_MOI_1140317.json").then((data) => {
+d3.json("./map_data_edit/COUNTY_MOI_1140317.json").then((data) => {
   data.features.splice(1, 21);
   console.log(data);
 
@@ -75,7 +75,7 @@ const svg2 = d3.select(".svg__small--c");
 const g2 = svg2.append("g");
 const width2 = +svg2.attr("width");
 const height2 = +svg2.attr("height");
-d3.json("./map_data/COUNTY_MOI_1140317.json").then((data) => {
+d3.json("./map_data_edit/COUNTY_MOI_1140317.json").then((data) => {
   data.features.splice(0, 13);
   data.features.splice(1, 8);
   // console.log(data.features);

@@ -4,6 +4,30 @@ const svg = d3.select(".svg__big");
 const g = svg.append("g");
 const width = +svg.attr("width");
 const height = +svg.attr("height");
+const cityApiMap = {
+  宜蘭縣: "/v1/rest/datastore/F-D0047-003",
+  桃園市: "/v1/rest/datastore/F-D0047-007",
+  新竹縣: "/v1/rest/datastore/F-D0047-011",
+  苗栗縣: "/v1/rest/datastore/F-D0047-015",
+  彰化縣: "/v1/rest/datastore/F-D0047-019",
+  南投縣: "/v1/rest/datastore/F-D0047-023",
+  雲林縣: "/v1/rest/datastore/F-D0047-027",
+  嘉義縣: "/v1/rest/datastore/F-D0047-031",
+  屏東縣: "/v1/rest/datastore/F-D0047-035",
+  臺東縣: "/v1/rest/datastore/F-D0047-039",
+  花蓮縣: "/v1/rest/datastore/F-D0047-043",
+  澎湖縣: "/v1/rest/datastore/F-D0047-047",
+  基隆市: "/v1/rest/datastore/F-D0047-051",
+  新竹市: "/v1/rest/datastore/F-D0047-055",
+  嘉義市: "/v1/rest/datastore/F-D0047-059",
+  臺北市: "/v1/rest/datastore/F-D0047-063",
+  高雄市: "/v1/rest/datastore/F-D0047-067",
+  新北市: "/v1/rest/datastore/F-D0047-071",
+  臺中市: "/v1/rest/datastore/F-D0047-075",
+  臺南市: "/v1/rest/datastore/F-D0047-079",
+  連江縣: "/v1/rest/datastore/F-D0047-083",
+  金門縣: "/v1/rest/datastore/F-D0047-087",
+};
 
 // 本島+澎湖
 d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
@@ -26,11 +50,25 @@ d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
     .append("path")
     .attr("d", pathGenerator)
     .attr("class", "county")
-    .attr("data-id", (d) => d.properties.COUNTYID)
+    .attr("data-county", (d) => d.properties.COUNTYNAME)
     .append("title")
     .text((d) => d.properties.COUNTYNAME); // tooltip
 
   g.attr("transform", "translate(-980, 100) scale(1.5)");
+
+  // 獲取API
+  const cities = document.querySelectorAll("path.county");
+  cities.forEach((path) => {
+    path.addEventListener("click", async () => {
+      const county = path.dataset.county;
+      const url = cityApiMap[`${county}`];
+
+      const req = await fetch(url);
+
+      const response = await req.json();
+      console.log(response);
+    });
+  });
 });
 
 // 連江縣
@@ -49,21 +87,13 @@ d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
 
   const pathGenerator = d3.geoPath().projection(projection);
 
-  // const bounds = pathGenerator.bounds(data);
-  // const scale = 50;
-  // const dx = bounds[1][0] - bounds[0][0];
-  // const dy = bounds[1][1] - bounds[0][1];
-  // const x = (width1 - dx) / 2 - bounds[0][0];
-  // const y = (height1 - dy) / 2 - bounds[0][1];
-  // console.log(x, y);
-  // g1.attr("transform", `translate(${x}, ${y}) scale(${scale})`);
-
   g1.selectAll("path")
     .data(data.features)
     .enter()
     .append("path")
     .attr("d", pathGenerator)
     .attr("class", "country")
+    .attr("data-id", (d) => d.properties.COUNTYID)
     .append("title")
     .text((d) => d.properties.COUNTYNAME); // tooltip
 
@@ -93,8 +123,19 @@ d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
     .append("path")
     .attr("d", pathGenerator)
     .attr("class", "country2")
+    .attr("data-id", (d) => d.properties.COUNTYID)
     .append("title")
     .text((d) => d.properties.COUNTYNAME); // tooltip
 
   g2.attr("transform", "translate(-60, -385) scale(0.5)");
 });
+
+// svg 定位
+// const bounds = pathGenerator.bounds(data);
+// const scale = 50;
+// const dx = bounds[1][0] - bounds[0][0];
+// const dy = bounds[1][1] - bounds[0][1];
+// const x = (width1 - dx) / 2 - bounds[0][0];
+// const y = (height1 - dy) / 2 - bounds[0][1];
+// console.log(x, y);
+// g1.attr("transform", `translate(${x}, ${y}) scale(${scale})`);
