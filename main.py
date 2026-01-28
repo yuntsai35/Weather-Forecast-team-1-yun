@@ -2,15 +2,13 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-import datetime
 import requests as remote_requests
-
+from dhooks import Webhook, Embed
 from fastapi import * 
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
-import datetime
-from datetime import timezone
+
 app=FastAPI()
 
 app.mount("/page", StaticFiles(directory="page"), name="page")
@@ -210,3 +208,65 @@ async def get_rain_amount(request: Request, station_id: str = None):
         Rainfall_data.append(data)
 
     return {"success": True, "data": Rainfall_data}
+
+
+discord=os.getenv("DISCORD_URL2")
+
+hook= Webhook(discord)
+
+
+@app.post('/sendWebhook')
+def get_weekly_weather(body: dict = Body(...)):
+
+    countyName=body["cityText"]
+    townName=body["areaText"]
+
+    countyId = None
+    for k, v in city_codes.items():
+        if v == countyName:
+            countyId = k 
+            break
+
+    url = f"https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-093?Authorization={api_key}&format=JSON&locationId=F-D0047-{countyId}&LocationName={townName}&ElementName="
+    response = remote_requests.get(url,verify=False, timeout=10)
+    data = response.json()
+    data_json = data['records']['Locations'][0]['Location']
+
+    countyName=city_codes[countyId]
+
+    embed=Embed(title=f'🌟 {countyName}{townName} 白天一週天氣預報', color=505058, timestamp='now')
+    for item in data_json:
+
+        WeatherElement = item['WeatherElement']
+
+        temp_times = WeatherElement[0]['Time']
+        humi_times = WeatherElement[4]['Time']
+        rain_times = WeatherElement[11]['Time']
+        clim_times = WeatherElement[12]['Time']
+
+
+        for i in range(len(temp_times)):
+            startTime = temp_times[i]['StartTime']
+
+            time_list=startTime.split('T')
+            date=time_list[0]
+            detail_time_list=time_list[1].split(":")
+
+            if detail_time_list[0] == '06':
+                Temperature = temp_times[i]['ElementValue'][0]['Temperature']
+                RelativeHumidity = humi_times[i]['ElementValue'][0]['RelativeHumidity']
+                ProbabilityOfPrecipitation = rain_times[i]['ElementValue'][0]['ProbabilityOfPrecipitation']
+                Weather = clim_times[i]['ElementValue'][0]['Weather']
+
+                
+                field_name= f'> **{date}**'
+                field_value = (
+                    f"🌡️ 溫度 {Temperature} ℃\n"
+                    f"💧 濕度 {RelativeHumidity}%\n"
+                    f"🌧️ 降雨 {ProbabilityOfPrecipitation}%\n"
+                    f"☀️ 天氣 {Weather}"
+                )
+                embed.add_field(name=field_name, value=field_value, inline=True)
+
+    embed.set_footer(text='資料來源: 中央氣象局')
+    hook.send("# 感謝您使用本網站 😊\n以下為一週白天天氣預報", embeds=[embed]) 
