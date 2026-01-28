@@ -22,14 +22,12 @@ ul, ol{
 }
 
 main{
-    height: calc(100vh - 50px - 40px);
-    margin-top: 56px;
+    margin: 80px 0;
 }
 
 .data-section{
     max-width: 1200px;
     width: 100%;
-    max-height: calc(100vh - 50px - 40px);
     display: flex;
     flex-direction: column;
     gap: 40px;
