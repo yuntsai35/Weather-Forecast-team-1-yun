@@ -31,6 +31,20 @@
     background-color: var(--color-primary-300);
 }
 
+.dc-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.dc-icon img{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    padding: 1px;
+}
+
 .select-nav{
     display: flex;
     justify-content: space-between;
