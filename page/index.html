@@ -32,7 +32,7 @@
                   keyboard_arrow_down
                 </span>
               </button>
-              <ul class="dropdown__options">
+              <ul class="dropdown__options" id="city-options">
                 <!-- JS 動態載入 options-->
               </ul>
             </div>
@@ -43,16 +43,16 @@
                   keyboard_arrow_down
                 </span>
               </button>
-              <ul class="dropdown__options">
+              <ul class="dropdown__options" id="area-options">
                 <!-- JS 動態載入 options-->
               </ul>
             </div>
           </div>
           <div class="buttons-wrap">
-            <button type="button" class="btn btn--primary active" id="week-btn">
+            <button type="button" class="btn btn--primary" id="weekly-btn">
               一週天氣
             </button>
-            <button type="button" class="btn btn--primary" id="rain-btn">
+            <button type="button" class="btn btn--primary" id="rainfall-btn">
               雨量觀測
             </button>
           </div>
@@ -107,8 +107,47 @@
             </table>
           </div>
         </div>
+        <div class="rainfall-data-wrap" hidden>
+          <div class="rainfall-data-table__header--wrap">
+            <table class="rainfall-data-table">
+              <thead class="rainfall-data-table__header">
+                <tr>
+                  <th>縣市</th>
+                  <th>鄉鎮</th>
+                  <th>10分鐘</th>
+                  <th>1小時</th>
+                  <th>6小時</th>
+                  <th>12小時</th>
+                  <th>24小時</th>
+                  <th>當日累積</th>
+                  <th>有效累積</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <!-- 資料區塊 -->
+          <div class="date-group">
+            <table class="rainfall-data-table">
+              <tbody>
+                <tr class="data-row">
+                  <td class="data-cell">宜蘭縣</td>
+                  <td class="time-cell">頭城鎮</td>
+                  <td>0.5</td>
+                  <td>1.5</td>
+                  <td>3.5</td>
+                  <td>3.5</td>
+                  <td>3.5</td>
+                  <td>3.5</td>
+                  <td>95</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
     </main>
     <footer class="footer"><p>COPYRIGHT © 2026 全國即時氣象</p></footer>
+
+    <script type="module" src="/page/script/index.js"></script>
   </body>
 </html>
