@@ -23,6 +23,35 @@ const cityApiMap = {
   金門縣: "/v1/rest/datastore/F-D0047-087",
 };
 
+// 縣市對應測站ID (主要測站)
+const cityStationMap = {
+  宜蘭縣: "C0X190",
+  桃園市: "C0C480",
+  新竹縣: "C0H990",
+  苗栗縣: "C0K430",
+  彰化縣: "C0M500",
+  南投縣: "C0M610",
+  雲林縣: "C0N310",
+  嘉義縣: "C0R190",
+  屏東縣: "C0S490",
+  臺東縣: "C0T9A0",
+  花蓮縣: "C0U750",
+  澎湖縣: "C0Z050",
+  基隆市: "C0A520",
+  新竹市: "C0H930",
+  嘉義市: "C0Q690",
+  臺北市: "C0AC40",
+  高雄市: "C0R800",
+  新北市: "C0AD20",
+  臺中市: "C0K150",
+  臺南市: "C0R100",
+  連江縣: "C0A9D0",
+  金門縣: "C0X120",
+};
+
+let currentTownData = [];
+let currentSelectedCity = "";
+
 export function initDropdown() {
   renderCityDropdown();
 
@@ -75,13 +104,16 @@ export function initDropdown() {
       chartWrap.hidden = true;
       weeklyDataWrap.hidden = true;
       rainfallDataWrap.hidden = false;
+
+      // 切換到雨量觀測時，如果以選擇縣市，載入雨量資料
+      if (currentSelectedCity) {
+        getRainfallData(currentSelectedCity);
+      }
     }
   }
 }
 
 // ===== Dropdown =====
-
-let currentTownData = [];
 
 function renderCityDropdown() {
   const cityOptions = document.getElementById("city-options");
@@ -100,6 +132,8 @@ function selectCity(cityName) {
   const cityOptions = document.getElementById("city-options");
   const areaOptions = document.getElementById("area-options");
 
+  currentSelectedCity = cityName;
+
   document.querySelector("#city-btn .dropdown__text").textContent = cityName;
   cityOptions.classList.remove("is-open");
 
@@ -109,6 +143,12 @@ function selectCity(cityName) {
 
   const apiUrl = cityApiMap[cityName];
   getTownData(apiUrl);
+
+  // 如果當前在雨量頁面，也更新雨量資料
+  const rainfallBtn = document.querySelector("#rainfall-btn");
+  if (rainfallBtn && rainfallBtn.classList.contains("active")) {
+    getRainfallData(cityName);
+  }
 }
 
 export async function getTownData(apiUrl) {
@@ -265,4 +305,125 @@ function formatDate(dateStr) {
 function formatWeekday(dateStr) {
   const weeks = ["週日", "週一", "週二", "週三", "週四", "週五", "週六"];
   return weeks[new Date(dateStr).getDay()];
+}
+
+// ===== Rainfall Data =====
+
+export async function getRainfallData(cityName) {
+  const stationId = cityStationMap[cityName];
+
+  if (!stationId) {
+    console.error("找不到對應的測站");
+    clearRainfallTable();
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `/v1/rest/datastore/O-A0002-001?station_id=${stationId}`
+    );
+
+    if (!res.ok) {
+      throw new Error(`HTTP 錯誤： ${res.status}`);
+    }
+
+    const result = await res.json();
+    console.log(result.data);
+
+    if (result.success && result.data && result.data.length > 0) {
+      renderRainfallTable(result.data);
+    } else {
+      console.error("沒有雨量資料");
+      clearRainfallTable();
+    }
+  } catch (err) {
+    console.error("取得雨量資料失敗", err);
+    clearRainfallTable();
+  }
+}
+
+function clearRainfallTable() {
+  const rainfallDataGroup = document.querySelector(
+    ".rainfall-data-wrap .date-group"
+  );
+
+  if (rainfallDataGroup) {
+    rainfallDataGroup.innerHTML = "";
+  }
+}
+
+function renderRainfallTable(rainfallData) {
+  clearRainfallTable();
+
+  const rainfallDataGroup = document.querySelector(
+    ".rainfall-data-wrap .date-group"
+  );
+
+  rainfallData.forEach(function (station) {
+    const table = document.createElement("table");
+    table.className = "rainfall-data-table";
+
+    const tbody = document.createElement("tbody");
+
+    const tr = document.createElement("tr");
+    tr.className = "data-row";
+
+    const tdStation = document.createElement("td");
+    tdStation.textContent = station.StationName;
+    tr.appendChild(tdStation);
+
+    const tdNow = document.createElement("td");
+    tdNow.textContent = formatRainfall(station.Now);
+    tr.appendChild(tdNow);
+
+    const td10Min = document.createElement("td");
+    td10Min.textContent = formatRainfall(station.Past10Min);
+    tr.appendChild(td10Min);
+
+    const td1Hr = document.createElement("td");
+    td1Hr.textContent = formatRainfall(station.Past1hr);
+    tr.appendChild(td1Hr);
+
+    const td3Hr = document.createElement("td");
+    td3Hr.textContent = formatRainfall(station.Past3hr);
+    tr.appendChild(td3Hr);
+
+    const td6Hr = document.createElement("td");
+    td6Hr.textContent = formatRainfall(station.Past6Hr);
+    tr.appendChild(td6Hr);
+
+    const td12Hr = document.createElement("td");
+    td12Hr.textContent = formatRainfall(station.Past12hr);
+    tr.appendChild(td12Hr);
+
+    const td24Hr = document.createElement("td");
+    td24Hr.textContent = formatRainfall(station.Past24hr);
+    tr.appendChild(td24Hr);
+
+    tbody.appendChild(tr);
+    table.appendChild(tbody);
+    rainfallDataGroup.appendChild(table);
+  });
+}
+
+function formatRainfall(value) {
+  // 處理無效值
+  if (
+    value === "-998" ||
+    value === "-99" ||
+    value === "T" ||
+    !value ||
+    value === "-998.00" ||
+    value === "-99.00"
+  ) {
+    return "-";
+  }
+
+  // 轉為數字並格式化
+  const num = parseFloat(value);
+  if (isNaN(num)) {
+    return "-";
+  }
+
+  return num.toFixed(1) + " mm";
 }
