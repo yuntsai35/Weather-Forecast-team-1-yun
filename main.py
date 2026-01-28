@@ -2,17 +2,13 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-import datetime
 import requests as remote_requests
-
 from dhooks import Webhook, Embed
-
 from fastapi import * 
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
-import datetime
-from datetime import timezone
+
 app=FastAPI()
 
 app.mount("/page", StaticFiles(directory="page"), name="page")
