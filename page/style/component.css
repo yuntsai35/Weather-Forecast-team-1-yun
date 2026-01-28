@@ -97,11 +97,23 @@
 }
 
 /* Chart */
+.chart-wrap{
+    position: relative;
+    height: 400px;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
 .chart-wrap > h3 {
     color: var(--color-zinc-600);
 }
 
 /* Weekly Weather Table */
+.weekly-data-wrap > h3{
+    color: var(--color-zinc-600);
+    margin-bottom: 20px;
+}
+
 /* 表頭 */
 .weekly-data-table__header--wrap {
     border: 1px solid var(--color-zinc-200);

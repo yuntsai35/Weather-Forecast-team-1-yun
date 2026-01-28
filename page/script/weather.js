@@ -1,3 +1,5 @@
+import { initChart } from "./chart.js";
+
 const countyApiMap = {
   宜蘭縣: "/v1/rest/datastore/F-D0047-003",
   桃園市: "/v1/rest/datastore/F-D0047-007",
@@ -24,11 +26,12 @@ const countyApiMap = {
 };
 
 let currentTownData = [];
-let currentSelectedCity = "";
+let currentSelectedCounty = "";
+let currentSelectedTown = "";
 let allRainfallData = null;
 
 export function initDataSection() {
-  renderCityDropdown();
+  renderCountyDropdown();
 
   const countyBtn = document.querySelector("#county-btn");
   const countyOptions = document.getElementById("county-options");
@@ -61,8 +64,7 @@ export function initDataSection() {
   }
 
   function switchButton(button) {
-    const chartWrap = document.querySelector(".chart-wrap");
-    const weeklyDataWrap = document.querySelector(".weekly-data-wrap");
+    const weatherWrap = document.querySelector(".weather-wrap");
     const rainfallDataWrap = document.querySelector(".rainfall-data-wrap");
     const areaBtn = document.querySelector("#area-btn");
 
@@ -71,21 +73,19 @@ export function initDataSection() {
       rainfallBtn.classList.remove("active");
       areaBtn.classList.remove("is-hidden");
 
-      chartWrap.hidden = false;
-      weeklyDataWrap.hidden = false;
+      weatherWrap.hidden = false;
       rainfallDataWrap.hidden = true;
     } else {
       weeklyBtn.classList.remove("active");
       rainfallBtn.classList.add("active");
       areaBtn.classList.add("is-hidden");
 
-      chartWrap.hidden = true;
-      weeklyDataWrap.hidden = true;
+      weatherWrap.hidden = true;
       rainfallDataWrap.hidden = false;
 
       // 切換到雨量觀測時，如果以選擇縣市，載入雨量資料
-      if (currentSelectedCity) {
-        getRainfallData(currentSelectedCity);
+      if (currentSelectedCounty) {
+        getRainfallData(currentSelectedCounty);
       }
     }
   }
@@ -93,28 +93,33 @@ export function initDataSection() {
 
 // ===== Dropdown =====
 
-function renderCityDropdown() {
+function renderCountyDropdown() {
   const countyOptions = document.getElementById("county-options");
   countyOptions.innerHTML = "";
 
   Object.keys(countyApiMap).forEach(function (countyName) {
     const li = createOption(countyName);
     li.addEventListener("click", function () {
-      selectCity(countyName);
+      selectCounty(countyName);
     });
     countyOptions.appendChild(li);
   });
 }
 
-function selectCity(countyName) {
+function selectCounty(countyName) {
   const countyOptions = document.getElementById("county-options");
   const areaOptions = document.getElementById("area-options");
+  const weatherWrap = document.querySelector(".weather-wrap");
+  const weeklyBtn = document.querySelector("#weekly-btn");
 
-  currentSelectedCity = countyName;
+  currentSelectedCounty = countyName;
+  currentSelectedTown = ""; // 重設選擇
 
   document.querySelector("#county-btn .dropdown__text").textContent =
     countyName;
   countyOptions.classList.remove("is-open");
+  weatherWrap.hidden = false;
+  weeklyBtn.classList.add("active");
 
   document.querySelector("#area-btn .dropdown__text").textContent =
     "選擇鄉鎮市區";
@@ -140,6 +145,13 @@ export async function getTownData(apiUrl) {
     const result = await res.json();
     currentTownData = result.data;
     renderAreaDropdown(currentTownData);
+
+    // 選擇縣市後，自動載入第一個鄉鎮的圖表
+    if (currentTownData.length > 0) {
+      const firstTown = currentTownData[0];
+      currentSelectedTown = firstTown.LocationName;
+      initChart(firstTown.Time, firstTown.LocationName, currentSelectedCounty);
+    }
   } catch (err) {
     console.error("取得鄉鎮市區資料失敗", err);
   }
@@ -156,11 +168,18 @@ function renderAreaDropdown(townData) {
     li.addEventListener("click", function (e) {
       e.stopPropagation();
 
+      currentSelectedTown = item.LocationName;
+
       document.querySelector("#area-btn .dropdown__text").textContent =
         item.LocationName;
       areaOptions.classList.remove("is-open");
 
+      // 更新表格
       renderWeeklyTable(item.Time);
+
+      // 更新圖表
+      initChart(item.Time, item.LocationName, currentSelectedCounty);
+
       weeklyBtn.classList.add("active");
     });
     areaOptions.appendChild(li);
@@ -289,8 +308,6 @@ function formatWeekday(dateStr) {
 // ===== Rainfall Data =====
 
 export async function getRainfallData(countyName) {
-  console.log("縣市", countyName);
-
   try {
     if (!allRainfallData) {
       const apiUrl = `/v1/rest/datastore/O-A0002-001`;
@@ -318,13 +335,11 @@ export async function getRainfallData(countyName) {
       );
     });
 
-    console.log(`${countyName} 的測站數量：`, countyStations.length);
-
     if (countyStations.length > 0) {
       renderRainfallTable(countyStations);
     } else {
       console.warn(`找不到${countyName} 的測站資料`);
-      console.log("前5筆資料的縣市");
+
       result.data.slice(0, 5).forEach(function (station) {
         console.log("-", station.CountyName, station.StationName);
       });
