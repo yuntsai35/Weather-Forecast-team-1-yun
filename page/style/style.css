@@ -3,43 +3,143 @@
 @import url("headerAndFooter.css");
 @import url("component.css");
 
-*, *::before, *::after{
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 /* root */
-body{
-    padding: 0;
-    margin: 0;
-    background-color: var(--color-white-100);
-    font-family: "Noto Sans TC";
+body {
+  padding: 0;
+  margin: 0;
+  background-color: var(--color-white-100);
+  font-family: "Noto Sans TC";
 }
 
-ul, ol{
-    list-style: none;
-    margin: 0;
-    padding: 0;   
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-main{
-    margin: 80px 0;
+main {
+  margin: 80px 0;
 }
 
-.data-section{
-    max-width: 1200px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    margin: 0 auto;
+.data-section {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin: 0 auto;
+}
+/* map section */
+.map-section {
+  max-width: 1920px;
+  /* width: 100%; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mapInformation {
+  width: 1200px;
+  height: 1000px;
+  display: flex;
+  position: relative;
+}
+.map__left {
+  width: 50%;
+  height: 1000px;
+  overflow: hidden;
+  /* border: 1px solid black; */
+}
+.map__small--up {
+  width: 150px;
+  height: 100px;
+  overflow: hidden;
+  position: absolute;
+  bottom: 70%;
+  left: 15%;
+  border: 1px solid black;
+  z-index: 10;
+}
+.map__small--down {
+  width: 100px;
+  height: 80px;
+  overflow: hidden;
+  position: absolute;
+  bottom: 60%;
+  left: 15%;
+  border: 1px solid black;
+  z-index: 10;
+}
+.cityInformation__right {
+  width: 50%;
+  height: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.county {
+  fill: white;
+  stroke: black;
+  stroke-width: 1px;
+}
+.county:hover {
+  fill: #977c00;
+}
+.country {
+  fill: white;
+  stroke: black;
+  stroke-width: 2px;
+}
+.country:hover {
+  fill: #977c00;
+}
+.country2 {
+  fill: white;
+  stroke: black;
+  stroke-width: 2px;
+}
+.country2:hover {
+  fill: #977c00;
+}
+.cityInformation__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cityInformation__content p {
+  color: grey;
+  font-size: 16px;
+  font-weight: 400;
+}
+.informationBar {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+#weatherBtn {
+  width: 50%;
+  background-color: #98c1d9;
+  border: 1px solid white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+/* =========== */
+@media screen and (min-width: 992px) {
 }
 
-@media screen and (min-width:992px) {
+@media (max-width: 360px) {
+  main {
+    padding: 0 30px;
+  }
 }
-
-@media (max-width:360px){
-    main{
-        padding: 0 30px;
-    }
-}
-

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -14,13 +14,39 @@
       sizes="32x32"
       href="/page/image/favicon.ico"
     />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <title>全國即時氣象</title>
   </head>
   <body>
     <header></header>
     <main>
       <!-- 之後引入 Taiwan Map -->
-      <section></section>
+      <section class="map-section">
+        <div class="mapInformation">
+          <div class="map__left">
+            <svg width="1500" height="1800" class="svg__big"></svg>
+          </div>
+          <div class="map__small--up">
+            <svg width="1200" height="1500" class="svg__small--z"></svg>
+          </div>
+          <div class="map__small--down">
+            <svg width="1200" height="1500" class="svg__small--c"></svg>
+          </div>
+          <div class="cityInformation__right">
+            <div class="cityInformation__content">
+              <h1>全國　　天氣概況</h1>
+              <p>將滑鼠移至各縣市查看天氣概況</p>
+              <div class="informationBar">
+                <p>test</p>
+                <p>test</p>
+                <p>test</p>
+                <p>test</p>
+              </div>
+              <button type="button" id="weatherBtn">查看鄉鎮天氣</button>
+            </div>
+          </div>
+        </div>
+      </section>
       <!-- 鄉鎮一週預報 -->
       <section class="data-section">
         <div class="select-nav">
