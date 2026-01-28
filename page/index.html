@@ -3,10 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/page/style.css" />
+    <link rel="stylesheet" href="/page/style/style.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/page/image/favicon.ico"
     />
     <title>全國即時氣象</title>
   </head>
@@ -16,8 +22,132 @@
       <!-- 之後引入 Taiwan Map -->
       <section></section>
       <!-- 鄉鎮一週預報 -->
-      <section></section>
+      <section class="data-section">
+        <div class="select-nav">
+          <div class="dropdowns-wrap">
+            <div class="dropdowns-wrap__item">
+              <button type="button" class="btn dropdown__trigger" id="city-btn">
+                <span class="dropdown__text">選擇縣市</span>
+                <span class="material-symbols-outlined dropdown__icon">
+                  keyboard_arrow_down
+                </span>
+              </button>
+              <ul class="dropdown__options" id="city-options">
+                <!-- JS 動態載入 options-->
+              </ul>
+            </div>
+            <div class="dropdowns-wrap__item">
+              <button type="button" class="btn dropdown__trigger" id="area-btn">
+                <span class="dropdown__text">選擇鄉鎮市區</span>
+                <span class="material-symbols-outlined dropdown__icon">
+                  keyboard_arrow_down
+                </span>
+              </button>
+              <ul class="dropdown__options" id="area-options">
+                <!-- JS 動態載入 options-->
+              </ul>
+            </div>
+          </div>
+          <div class="buttons-wrap">
+            <button type="button" class="btn btn--primary" id="weekly-btn">
+              一週天氣
+            </button>
+            <button type="button" class="btn btn--primary" id="rainfall-btn">
+              雨量觀測
+            </button>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <h3>溫度曲線</h3>
+        </div>
+        <div class="weekly-data-wrap">
+          <div class="weekly-data-table__header--wrap">
+            <table class="weekly-data-table">
+              <thead class="weekly-data-table__header">
+                <tr>
+                  <th>日期</th>
+                  <th>時間</th>
+                  <th>天氣</th>
+                  <th>降雨</th>
+                  <th>溫度</th>
+                  <th>濕度</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <!-- 日期區塊 -->
+          <div class="date-group">
+            <table class="weekly-data-table">
+              <tbody>
+                <tr class="date-row">
+                  <td class="date-cell" rowspan="2">
+                    <div class="date-info">
+                      <div class="date">01/26</div>
+                      <div class="weekday">週一</div>
+                    </div>
+                  </td>
+                  <td class="time-cell">
+                    <span class="material-symbols-outlined"> wb_sunny </span>
+                  </td>
+                  <td>陰時多雲</td>
+                  <td>80%</td>
+                  <td>92%</td>
+                  <td>20°C</td>
+                </tr>
+                <tr class="date-row">
+                  <td class="time-cell">
+                    <span class="material-symbols-outlined"> bedtime </span>
+                  </td>
+                  <td>陰天</td>
+                  <td>87%</td>
+                  <td>98%</td>
+                  <td>20°C</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="rainfall-data-wrap" hidden>
+          <div class="rainfall-data-table__header--wrap">
+            <table class="rainfall-data-table">
+              <thead class="rainfall-data-table__header">
+                <tr>
+                  <th>縣市</th>
+                  <th>鄉鎮</th>
+                  <th>10分鐘</th>
+                  <th>1小時</th>
+                  <th>6小時</th>
+                  <th>12小時</th>
+                  <th>24小時</th>
+                  <th>當日累積</th>
+                  <th>有效累積</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <!-- 資料區塊 -->
+          <div class="date-group">
+            <table class="rainfall-data-table">
+              <tbody>
+                <tr class="data-row">
+                  <td class="data-cell">宜蘭縣</td>
+                  <td class="time-cell">頭城鎮</td>
+                  <td>0.5</td>
+                  <td>1.5</td>
+                  <td>3.5</td>
+                  <td>3.5</td>
+                  <td>3.5</td>
+                  <td>3.5</td>
+                  <td>95</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
     </main>
-    <footer></footer>
+    <footer class="footer"><p>COPYRIGHT © 2026 全國即時氣象</p></footer>
+
+    <script type="module" src="/page/script/index.js"></script>
   </body>
 </html>
