@@ -26,6 +26,7 @@ d3.json("./map_data/COUNTY_MOI_1140317.json").then((data) => {
     .append("path")
     .attr("d", pathGenerator)
     .attr("class", "county")
+    .attr("data-id", (d) => d.properties.COUNTYID)
     .append("title")
     .text((d) => d.properties.COUNTYNAME); // tooltip
 
