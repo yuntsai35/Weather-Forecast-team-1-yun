@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -32,8 +32,8 @@
           <div class="map__small--down">
             <svg width="1200" height="1500" class="svg__small--c"></svg>
           </div>
-          <div class="cityInformation__right">
-            <div class="cityInformation__content">
+          <div class="countyInformation__right">
+            <div class="countyInformation__content">
               <h1>全國　　天氣概況</h1>
               <p>將滑鼠移至各縣市查看天氣概況</p>
               <div class="informationBar">
@@ -52,19 +52,23 @@
         <div class="select-nav">
           <div class="dropdowns-wrap">
             <div class="dropdowns-wrap__item">
-              <button type="button" class="btn dropdown__trigger" id="city-btn">
-                <span class="dropdown__text">選擇縣市</span>
+              <button
+                type="button"
+                class="btn dropdown__trigger"
+                id="county-btn"
+              >
+                <span class="dropdown__text" id="county-name">選擇縣市</span>
                 <span class="material-symbols-outlined dropdown__icon">
                   keyboard_arrow_down
                 </span>
               </button>
-              <ul class="dropdown__options" id="city-options">
+              <ul class="dropdown__options" id="county-options">
                 <!-- JS 動態載入 options-->
               </ul>
             </div>
             <div class="dropdowns-wrap__item">
               <button type="button" class="btn dropdown__trigger" id="area-btn">
-                <span class="dropdown__text">選擇鄉鎮市區</span>
+                <span class="dropdown__text" id="town-name">選擇鄉鎮市區</span>
                 <span class="material-symbols-outlined dropdown__icon">
                   keyboard_arrow_down
                 </span>
@@ -112,34 +116,7 @@
           </div>
           <!-- 日期區塊 -->
           <div class="date-group">
-            <table class="weekly-data-table">
-              <tbody>
-                <tr class="date-row">
-                  <td class="date-cell" rowspan="2">
-                    <div class="date-info">
-                      <div class="date">01/26</div>
-                      <div class="weekday">週一</div>
-                    </div>
-                  </td>
-                  <td class="time-cell">
-                    <span class="material-symbols-outlined"> wb_sunny </span>
-                  </td>
-                  <td>陰時多雲</td>
-                  <td>80%</td>
-                  <td>92%</td>
-                  <td>20°C</td>
-                </tr>
-                <tr class="date-row">
-                  <td class="time-cell">
-                    <span class="material-symbols-outlined"> bedtime </span>
-                  </td>
-                  <td>陰天</td>
-                  <td>87%</td>
-                  <td>98%</td>
-                  <td>20°C</td>
-                </tr>
-              </tbody>
-            </table>
+            <!-- JS 動態產生 -->
           </div>
         </div>
         <div class="rainfall-data-wrap" hidden>
@@ -147,36 +124,21 @@
             <table class="rainfall-data-table">
               <thead class="rainfall-data-table__header">
                 <tr>
-                  <th>縣市</th>
-                  <th>鄉鎮</th>
+                  <th>測站站別</th>
+                  <th>即時</th>
                   <th>10分鐘</th>
                   <th>1小時</th>
+                  <th>3小時</th>
                   <th>6小時</th>
                   <th>12小時</th>
                   <th>24小時</th>
-                  <th>當日累積</th>
-                  <th>有效累積</th>
                 </tr>
               </thead>
             </table>
           </div>
           <!-- 資料區塊 -->
           <div class="area-group">
-            <table class="rainfall-data-table">
-              <tbody>
-                <tr class="data-row">
-                  <td class="data-cell">宜蘭縣</td>
-                  <td class="time-cell">頭城鎮</td>
-                  <td>0.5</td>
-                  <td>1.5</td>
-                  <td>3.5</td>
-                  <td>3.5</td>
-                  <td>3.5</td>
-                  <td>3.5</td>
-                  <td>95</td>
-                </tr>
-              </tbody>
-            </table>
+            <!-- JS 動態產生 -->
           </div>
         </div>
       </section>

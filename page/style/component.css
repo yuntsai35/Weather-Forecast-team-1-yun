@@ -246,14 +246,18 @@
 
 /* 資料區塊容器 */
 .area-group {
-    border: 1px solid var(--color-zinc-200); 
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 /* 資料行樣式 */
+.data-row{
+    border: 1px solid var(--color-zinc-200); 
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+    border-radius: 5px;
+}
+
 .data-row td {
     padding: 16px;
     text-align: center;
@@ -265,6 +269,10 @@
 /* 動作 */
 .active{
     background-color: var(--color-primary-600);
+}
+
+.is-hidden{
+    display: none;
 }
 
 @media (max-width:360px){

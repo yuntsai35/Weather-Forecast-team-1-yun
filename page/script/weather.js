@@ -1,4 +1,4 @@
-const cityApiMap = {
+const countyApiMap = {
   宜蘭縣: "/v1/rest/datastore/F-D0047-003",
   桃園市: "/v1/rest/datastore/F-D0047-007",
   新竹縣: "/v1/rest/datastore/F-D0047-011",
@@ -23,43 +23,18 @@ const cityApiMap = {
   金門縣: "/v1/rest/datastore/F-D0047-087",
 };
 
-// 縣市對應測站ID (主要測站)
-const cityStationMap = {
-  宜蘭縣: "C0X190",
-  桃園市: "C0C480",
-  新竹縣: "C0H990",
-  苗栗縣: "C0K430",
-  彰化縣: "C0M500",
-  南投縣: "C0M610",
-  雲林縣: "C0N310",
-  嘉義縣: "C0R190",
-  屏東縣: "C0S490",
-  臺東縣: "C0T9A0",
-  花蓮縣: "C0U750",
-  澎湖縣: "C0Z050",
-  基隆市: "C0A520",
-  新竹市: "C0H930",
-  嘉義市: "C0Q690",
-  臺北市: "C0AC40",
-  高雄市: "C0R800",
-  新北市: "C0AD20",
-  臺中市: "C0K150",
-  臺南市: "C0R100",
-  連江縣: "C0A9D0",
-  金門縣: "C0X120",
-};
-
 let currentTownData = [];
 let currentSelectedCity = "";
+let allRainfallData = null;
 
 export function initDropdown() {
   renderCityDropdown();
 
-  const cityBtn = document.querySelector("#city-btn");
-  const cityOptions = document.getElementById("city-options");
-  if (cityBtn) {
-    cityBtn.addEventListener("click", function () {
-      cityOptions.classList.toggle("is-open");
+  const countyBtn = document.querySelector("#county-btn");
+  const countyOptions = document.getElementById("county-options");
+  if (countyBtn) {
+    countyBtn.addEventListener("click", function () {
+      countyOptions.classList.toggle("is-open");
     });
   }
 
@@ -89,10 +64,12 @@ export function initDropdown() {
     const chartWrap = document.querySelector(".chart-wrap");
     const weeklyDataWrap = document.querySelector(".weekly-data-wrap");
     const rainfallDataWrap = document.querySelector(".rainfall-data-wrap");
+    const areaBtn = document.querySelector("#area-btn");
 
     if (button === "weekly") {
       weeklyBtn.classList.add("active");
       rainfallBtn.classList.remove("active");
+      areaBtn.classList.remove("is-hidden");
 
       chartWrap.hidden = false;
       weeklyDataWrap.hidden = false;
@@ -100,6 +77,7 @@ export function initDropdown() {
     } else {
       weeklyBtn.classList.remove("active");
       rainfallBtn.classList.add("active");
+      areaBtn.classList.add("is-hidden");
 
       chartWrap.hidden = true;
       weeklyDataWrap.hidden = true;
@@ -116,38 +94,39 @@ export function initDropdown() {
 // ===== Dropdown =====
 
 function renderCityDropdown() {
-  const cityOptions = document.getElementById("city-options");
-  cityOptions.innerHTML = "";
+  const countyOptions = document.getElementById("county-options");
+  countyOptions.innerHTML = "";
 
-  Object.keys(cityApiMap).forEach(function (cityName) {
-    const li = createOption(cityName);
+  Object.keys(countyApiMap).forEach(function (countyName) {
+    const li = createOption(countyName);
     li.addEventListener("click", function () {
-      selectCity(cityName);
+      selectCity(countyName);
     });
-    cityOptions.appendChild(li);
+    countyOptions.appendChild(li);
   });
 }
 
-function selectCity(cityName) {
-  const cityOptions = document.getElementById("city-options");
+function selectCity(countyName) {
+  const countyOptions = document.getElementById("county-options");
   const areaOptions = document.getElementById("area-options");
 
-  currentSelectedCity = cityName;
+  currentSelectedCity = countyName;
 
-  document.querySelector("#city-btn .dropdown__text").textContent = cityName;
-  cityOptions.classList.remove("is-open");
+  document.querySelector("#county-btn .dropdown__text").textContent =
+    countyName;
+  countyOptions.classList.remove("is-open");
 
   document.querySelector("#area-btn .dropdown__text").textContent =
     "選擇鄉鎮市區";
   areaOptions.innerHTML = "";
 
-  const apiUrl = cityApiMap[cityName];
+  const apiUrl = countyApiMap[countyName];
   getTownData(apiUrl);
 
   // 如果當前在雨量頁面，也更新雨量資料
   const rainfallBtn = document.querySelector("#rainfall-btn");
   if (rainfallBtn && rainfallBtn.classList.contains("active")) {
-    getRainfallData(cityName);
+    getRainfallData(countyName);
   }
 }
 
@@ -309,31 +288,46 @@ function formatWeekday(dateStr) {
 
 // ===== Rainfall Data =====
 
-export async function getRainfallData(cityName) {
-  const stationId = cityStationMap[cityName];
-
-  if (!stationId) {
-    console.error("找不到對應的測站");
-    clearRainfallTable();
-    return;
-  }
+export async function getRainfallData(countyName) {
+  console.log("縣市", countyName);
 
   try {
-    const res = await fetch(
-      `/v1/rest/datastore/O-A0002-001?station_id=${stationId}`
-    );
+    if (!allRainfallData) {
+      const apiUrl = `/v1/rest/datastore/O-A0002-001`;
+      const res = await fetch(apiUrl);
 
-    if (!res.ok) {
-      throw new Error(`HTTP 錯誤： ${res.status}`);
+      if (!res.ok) {
+        throw new Error(`HTTP 錯誤： ${res.status}`);
+      }
+
+      const result = await res.json();
+
+      if (result.success && result.data) {
+        allRainfallData = result.data;
+      } else {
+        console.warn("無法取得雨量資料");
+        clearRainfallTable();
+        return;
+      }
     }
 
-    const result = await res.json();
-    console.log(result.data);
+    const countyStations = allRainfallData.filter(function (station) {
+      return (
+        station.CountyName === countyName ||
+        station.CountyName === countyName.replace("臺", "台")
+      );
+    });
 
-    if (result.success && result.data && result.data.length > 0) {
-      renderRainfallTable(result.data);
+    console.log(`${countyName} 的測站數量：`, countyStations.length);
+
+    if (countyStations.length > 0) {
+      renderRainfallTable(countyStations);
     } else {
-      console.error("沒有雨量資料");
+      console.warn(`找不到${countyName} 的測站資料`);
+      console.log("前5筆資料的縣市");
+      result.data.slice(0, 5).forEach(function (station) {
+        console.log("-", station.CountyName, station.StationName);
+      });
       clearRainfallTable();
     }
   } catch (err) {
@@ -344,7 +338,7 @@ export async function getRainfallData(cityName) {
 
 function clearRainfallTable() {
   const rainfallDataGroup = document.querySelector(
-    ".rainfall-data-wrap .date-group"
+    ".rainfall-data-wrap .area-group"
   );
 
   if (rainfallDataGroup) {
@@ -356,8 +350,13 @@ function renderRainfallTable(rainfallData) {
   clearRainfallTable();
 
   const rainfallDataGroup = document.querySelector(
-    ".rainfall-data-wrap .date-group"
+    ".rainfall-data-wrap .area-group"
   );
+
+  if (!rainfallDataGroup) {
+    console.error("找不到 rainfallDataGroup 元素");
+    return;
+  }
 
   rainfallData.forEach(function (station) {
     const table = document.createElement("table");
