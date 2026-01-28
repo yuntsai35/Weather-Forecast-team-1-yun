@@ -45,7 +45,7 @@ main {
   align-items: center;
 }
 .mapInformation {
-  width: 1200px;
+  max-width: 1200px;
   height: 1000px;
   display: flex;
   position: relative;
@@ -76,7 +76,7 @@ main {
   border: 1px solid black;
   z-index: 10;
 }
-.cityInformation__right {
+.countyInformation__right {
   width: 50%;
   height: 1000px;
   display: flex;
@@ -110,18 +110,18 @@ main {
   fill: var(--color-primary-600);
   cursor: pointer;
 }
-.cityInformation__content {
+.countyInformation__content {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.cityInformation__content p {
+.countyInformation__content p {
   color: grey;
   font-size: 16px;
   font-weight: 400;
   margin-bottom: 20px;
 }
-.cityInformation__content h1 {
+.countyInformation__content h1 {
   color: black;
   font-size: 35px;
   font-weight: 700;
@@ -137,6 +137,9 @@ main {
   box-shadow: 1px 1px 2px 2px gainsboro;
   border-radius: 5px;
 }
+.informationBar p {
+  padding: 5px;
+}
 #weatherBtn {
   width: 100%;
   background-color: #98c1d9;
@@ -146,6 +149,9 @@ main {
   color: white;
   border-radius: 5px;
   cursor: pointer;
+}
+#weatherBtn:hover {
+  background-color: var(--color-primary-600);
 }
 /* =========== */
 @media screen and (min-width: 992px) {

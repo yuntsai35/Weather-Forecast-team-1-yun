@@ -28,10 +28,33 @@ const cityApiMap = {
   連江縣: "/v1/rest/datastore/F-D0047-083",
   金門縣: "/v1/rest/datastore/F-D0047-087",
 };
+const areaApiMap = {
+  嘉義縣: 0,
+  新北市: 1,
+  嘉義市: 2,
+  新竹縣: 3,
+  新竹市: 4,
+  臺北市: 5,
+  臺南市: 6,
+  宜蘭縣: 7,
+  苗栗縣: 8,
+  雲林縣: 9,
+  花蓮縣: 10,
+  臺中市: 11,
+  臺東縣: 12,
+  桃園市: 13,
+  南投縣: 14,
+  高雄市: 15,
+  金門縣: 16,
+  屏東縣: 17,
+  基隆市: 18,
+  澎湖縣: 19,
+  彰化縣: 20,
+  連江縣: 21,
+};
 
 // 本島+澎湖
 d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
-  console.log(data);
   const testData = data.features[0];
   data.features.splice(0, 1);
   data.features.splice(12, 1);
@@ -58,15 +81,26 @@ d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
 
   // 獲取API
   const cities = document.querySelectorAll("path.county");
+  const cityTitle = document.querySelector(".cityTitle");
   cities.forEach((path) => {
     path.addEventListener("click", async () => {
       const county = path.dataset.county;
-      const url = cityApiMap[`${county}`];
+      const url = "/v1/rest/datastore/F-C0032-001";
 
       const req = await fetch(url);
 
       const response = await req.json();
-      console.log(response);
+      console.log(response.data[areaApiMap[`${county}`]]);
+
+      cityTitle.textContent = "";
+      cityTitle.textContent = `${county}　天氣概況`;
+
+      const btnText = document.getElementById("county-name");
+      const weatherBtn = document.getElementById("weatherBtn");
+      weatherBtn.addEventListener("click", () => {
+        const cityName = cityTitle.textContent.slice(0, 3);
+        btnText.textContent = cityName;
+      });
     });
   });
 });
@@ -78,7 +112,6 @@ const width1 = +svg1.attr("width");
 const height1 = +svg1.attr("height");
 d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
   data.features.splice(1, 21);
-  console.log(data);
 
   const projection = d3
     .geoIdentity()
@@ -108,7 +141,6 @@ const height2 = +svg2.attr("height");
 d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
   data.features.splice(0, 13);
   data.features.splice(1, 8);
-  // console.log(data.features);
 
   const projection = d3
     .geoIdentity()
