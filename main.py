@@ -13,7 +13,7 @@ import datetime
 from datetime import timezone
 app=FastAPI()
 
-app.mount("/static", StaticFiles(directory="page"), name="page")
+app.mount("/page", StaticFiles(directory="page"), name="page")
 
 @app.get("/", include_in_schema=False)
 async def index(request: Request):
@@ -31,7 +31,7 @@ async def get_weather_36h(request: Request, locationName: str=None):
     if locationName:
        url += f'&locationName={locationName}'
     
-    response=remote_requests.get(url)
+    response=remote_requests.get(url,verify=False, timeout=10)
 
     if response.status_code != 200:
         return {"error": "無法取得氣象資料"}
@@ -158,7 +158,7 @@ async def get_weekly_forecast(city_id: str, LocationName: str = None):
     if LocationName:
       url += f'&LocationName={LocationName}'
 
-    data=remote_requests.get(url)
+    data=remote_requests.get(url, verify=False, timeout=10)
     data_json = data.json()
 
     processed_data = data_process(data_json)
@@ -175,7 +175,7 @@ async def get_rain_amount(request: Request, station_id: str = None):
     if station_id:
         url += f'&StationId={station_id}'
 
-    data=remote_requests.get(url)
+    data=remote_requests.get(url, verify=False, timeout=10)
     data_json = data.json()
     
     if 'Station' not in data_json['records']:
