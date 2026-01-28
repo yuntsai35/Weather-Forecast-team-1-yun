@@ -27,7 +27,7 @@ let currentTownData = [];
 let currentSelectedCity = "";
 let allRainfallData = null;
 
-export function initDropdown() {
+export function initDataSection() {
   renderCityDropdown();
 
   const countyBtn = document.querySelector("#county-btn");
