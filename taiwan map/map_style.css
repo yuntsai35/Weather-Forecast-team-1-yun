@@ -1,12 +1,14 @@
 .topbar__whole {
-  width: 1920px;
+  max-width: 1920px;
   display: flex;
   justify-content: center;
+  align-items: center;
   background-color: #98c1d9;
 }
 .topbar {
   width: 1200px;
   height: 60px;
+  margin: 20px auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,7 +19,7 @@
   font-weight: 400;
 }
 .main {
-  width: 1920px;
+  max-width: 1920px;
   /* margin-top: 200px; */
   display: flex;
   justify-content: center;
@@ -26,12 +28,12 @@
   width: 1200px;
   height: 1000px;
   display: flex;
+  position: relative;
 }
 .map__left {
   width: 50%;
   height: 1000px;
   overflow: hidden;
-  position: relative;
   /* border: 1px solid black; */
 }
 .map__small--up {
@@ -39,8 +41,8 @@
   height: 100px;
   overflow: hidden;
   position: absolute;
-  bottom: 60%;
-  left: 25%;
+  bottom: 70%;
+  left: 15%;
   border: 1px solid black;
   z-index: 10;
 }
@@ -49,8 +51,8 @@
   height: 80px;
   overflow: hidden;
   position: absolute;
-  bottom: 45%;
-  left: 25%;
+  bottom: 60%;
+  left: 15%;
   border: 1px solid black;
   z-index: 10;
 }
