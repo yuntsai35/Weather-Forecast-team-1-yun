@@ -33,6 +33,41 @@ let allRainfallData = null;
 export function initDataSection() {
   renderCountyDropdown();
 
+  // 初始化按鈕狀態為禁用
+  const weeklyBtn = document.querySelector("#weekly-btn");
+  const rainfallBtn = document.querySelector("#rainfall-btn");
+  const discordBtn = document.querySelector("#discord-btn");
+
+  if (weeklyBtn) weeklyBtn.disabled = true;
+  if (rainfallBtn) rainfallBtn.disabled = true;
+  if (discordBtn) discordBtn.classList.add("is-hidden");
+
+  // 點擊外部區域自動收合下拉選單
+  document.addEventListener("click", function (e) {
+    const countyBtn = document.querySelector("#county-btn");
+    const countyOptions = document.getElementById("county-options");
+    const areaBtn = document.querySelector("#area-btn");
+    const areaOptions = document.getElementById("area-options");
+
+    // 檢查點擊是否在縣市下拉選單外部
+    if (countyBtn && countyOptions) {
+      const isClickInsideCounty =
+        countyBtn.contains(e.target) || countyOptions.contains(e.target);
+      if (!isClickInsideCounty) {
+        countyOptions.classList.remove("is-open");
+      }
+    }
+
+    // 檢查點擊是否在鄉鎮下拉選單外部
+    if (areaBtn && areaOptions) {
+      const isClickInsideArea =
+        areaBtn.contains(e.target) || areaOptions.contains(e.target);
+      if (!isClickInsideArea) {
+        areaOptions.classList.remove("is-open");
+      }
+    }
+  });
+
   const weatherBtn = document.querySelector("#weatherBtn");
   if (weatherBtn) {
     weatherBtn.addEventListener("click", function () {
@@ -88,17 +123,19 @@ export function initDataSection() {
     });
   }
 
-  const weeklyBtn = document.querySelector("#weekly-btn");
   if (weeklyBtn) {
     weeklyBtn.addEventListener("click", function () {
-      switchButton("weekly");
+      if (!weeklyBtn.disabled) {
+        switchButton("weekly");
+      }
     });
   }
 
-  const rainfallBtn = document.querySelector("#rainfall-btn");
   if (rainfallBtn) {
     rainfallBtn.addEventListener("click", function () {
-      switchButton("rainfall");
+      if (!rainfallBtn.disabled) {
+        switchButton("rainfall");
+      }
     });
   }
 
@@ -152,10 +189,22 @@ function selectCounty(countyName) {
   const countyOptions = document.getElementById("county-options");
   const areaOptions = document.getElementById("area-options");
   const weatherWrap = document.querySelector(".weather-wrap");
+  const rainfallDataWrap = document.querySelector(".rainfall-data-wrap");
   const weeklyBtn = document.querySelector("#weekly-btn");
+  const rainfallBtn = document.querySelector("#rainfall-btn");
+  const discordBtn = document.querySelector("#discord-btn");
 
   currentSelectedCounty = countyName;
   currentSelectedTown = ""; // 重設選擇
+
+  // 啟動按鈕
+  if (weeklyBtn) weeklyBtn.disabled = false;
+  if (rainfallBtn) rainfallBtn.disabled = false;
+
+  if (currentSelectedCounty) {
+    const emptyContent = document.querySelector(".empty-content");
+    emptyContent.classList.add("is-hidden");
+  }
 
   if (currentSelectedTown === "") {
     const dateGroup = document.querySelector(".date-group");
@@ -165,8 +214,23 @@ function selectCounty(countyName) {
   document.querySelector("#county-btn .dropdown__text").textContent =
     countyName;
   countyOptions.classList.remove("is-open");
-  weatherWrap.hidden = false;
-  weeklyBtn.classList.add("active");
+
+  // 檢查當前是哪個模式
+  const isRainFallMode =
+    rainfallBtn && rainfallBtn.classList.contains("active");
+
+  if (isRainFallMode) {
+    // 雨量觀測模式：只顯示雨量資料
+    weatherWrap.hidden = true;
+    rainfallDataWrap.hidden = false;
+    getRainfallData(countyName);
+  } else {
+    // 一週天氣模式：顯示天氣資料
+    weatherWrap.hidden = false;
+    rainfallDataWrap.hidden = true;
+    weeklyBtn.classList.add("active");
+    discordBtn.classList.remove("is-hidden");
+  }
 
   document.querySelector("#area-btn .dropdown__text").textContent =
     "選擇鄉鎮市區";
@@ -176,7 +240,6 @@ function selectCounty(countyName) {
   getTownData(apiUrl);
 
   // 如果當前在雨量頁面，也更新雨量資料
-  const rainfallBtn = document.querySelector("#rainfall-btn");
   if (rainfallBtn && rainfallBtn.classList.contains("active")) {
     getRainfallData(countyName);
   }
