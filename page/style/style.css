@@ -92,6 +92,16 @@ main {
   align-items: center;
   justify-content: center; */
 }
+#icon {
+  width: 150px;
+  height: auto;
+  padding: 5px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  font-size: 60px;
+  color: gray;
+}
 .county {
   fill: white;
   stroke: black;
@@ -183,13 +193,14 @@ main {
 @media (max-width: 950px) {
   .mapInformation {
     max-width: 950px;
+    /* width: 100%; */
     height: auto;
     display: block;
     position: relative;
   }
   .map__left {
     width: 100%;
-    height: 850px;
+    height: 650px;
     overflow: hidden;
     margin: auto;
     /* border: 1px solid black; */
@@ -202,24 +213,12 @@ main {
     justify-content: center;
   }
   .map__small--up {
-    width: 150px;
-    height: 100px;
-    overflow: hidden;
-    position: absolute;
     bottom: 80%;
-    left: 15%;
-    border: 1px solid black;
-    z-index: 10;
+    left: 30%;
   }
   .map__small--down {
-    width: 100px;
-    height: 80px;
-    overflow: hidden;
-    position: absolute;
     bottom: 70%;
-    left: 15%;
-    border: 1px solid black;
-    z-index: 10;
+    left: 30%;
   }
   .countyInformation__content {
     display: flex;
@@ -240,13 +239,57 @@ main {
     position: absolute;
     bottom: -20%;
   }
-  /* .cityTitle {
-    white-space: nowrap;
-  } */
+  .svg__big g {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: translate(-350px, 100px);
+  }
 }
-
-@media (max-width: 360px) {
+@media (max-width: 730px) {
+  .countyInformation__content {
+    width: 80%;
+  }
+}
+@media (max-width: 550px) {
+  .countyInformation__content {
+    width: 65%;
+  }
+  .map__small--up {
+    bottom: 80%;
+    left: 35%;
+  }
+  .map__small--down {
+    bottom: 70%;
+    left: 35%;
+  }
+}
+@media (max-width: 430px) {
   main {
     padding: 0 30px;
+  }
+  .mapInformation {
+    width: 100%;
+  }
+  .map__small--up {
+    bottom: 80%;
+    left: -5%;
+  }
+  .map__small--down {
+    bottom: 65%;
+    left: -5%;
+  }
+  .svg__big g {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: translate(-700px, 0px);
+  }
+  .topbar {
+    justify-content: center;
+  }
+  .leftTitle {
+    margin-left: 0;
+  }
+  .countyInformation__right {
+    display: none;
   }
 }

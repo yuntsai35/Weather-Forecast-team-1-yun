@@ -6,6 +6,7 @@ const width = +svg.attr("width");
 const height = +svg.attr("height");
 let temparature = document.querySelector(".temparature");
 let weatherStatus = document.querySelector(".status");
+let weatherIcon = document.getElementById("icon");
 const render = async function () {
   const urlOrigin = "/v1/rest/datastore/F-C0032-001?locationName=臺北市";
   const req = await fetch(urlOrigin);
@@ -14,6 +15,12 @@ const render = async function () {
   const data = response.data;
   temparature.textContent = `${data[0].MinT}℃ -${data[0].MaxT}℃ `;
   weatherStatus.textContent = `${data[0].Wx}`;
+  if (data[0].Wx.includes("雲")) {
+    weatherIcon.textContent = "cloud";
+  }
+  if (data[0].Wx.includes("雨")) {
+    weatherIcon.textContent = "rainy";
+  }
 };
 render();
 
@@ -58,10 +65,11 @@ d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
       console.log(data);
 
       cityTitle.textContent = "";
-      cityTitle.textContent = `${county}　天氣概況`;
+      cityTitle.textContent = `${county} 天氣概況`;
 
       temparature.textContent = `${data[0].MinT}℃ -${data[0].MaxT}℃ `;
       weatherStatus.textContent = `${data[0].Wx}`;
+      weatherIcon.textContent = "cloud";
     });
   });
 });
@@ -107,7 +115,7 @@ d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
     console.log(data);
 
     cityTitle.textContent = "";
-    cityTitle.textContent = `${county}　天氣概況`;
+    cityTitle.textContent = `${county} 天氣概況`;
 
     temparature.textContent = `${data[0].MinT}℃ -${data[0].MaxT}℃ `;
     weatherStatus.textContent = `${data[0].Wx}`;
@@ -156,7 +164,7 @@ d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
     console.log(data);
 
     cityTitle.textContent = "";
-    cityTitle.textContent = `${county}　天氣概況`;
+    cityTitle.textContent = `${county} 天氣概況`;
 
     temparature.textContent = `${data[0].MinT}℃ -${data[0].MaxT}℃ `;
     weatherStatus.textContent = `${data[0].Wx}`;
