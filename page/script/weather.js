@@ -157,6 +157,11 @@ function selectCounty(countyName) {
   currentSelectedCounty = countyName;
   currentSelectedTown = ""; // 重設選擇
 
+  if (currentSelectedTown === "") {
+    const dateGroup = document.querySelector(".date-group");
+    dateGroup.innerHTML = `<div class="date-group--empty">請選擇鄉鎮市區以查詢詳細天氣資訊</div>`;
+  }
+
   document.querySelector("#county-btn .dropdown__text").textContent =
     countyName;
   countyOptions.classList.remove("is-open");
