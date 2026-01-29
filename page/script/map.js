@@ -69,7 +69,12 @@ d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
 
       temparature.textContent = `${data[0].MinT}℃ -${data[0].MaxT}℃ `;
       weatherStatus.textContent = `${data[0].Wx}`;
-      weatherIcon.textContent = "cloud";
+      if (data[0].Wx.includes("雲")) {
+        weatherIcon.textContent = "cloud";
+      }
+      if (data[0].Wx.includes("雨")) {
+        weatherIcon.textContent = "rainy";
+      }
     });
   });
 });
@@ -119,6 +124,12 @@ d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
 
     temparature.textContent = `${data[0].MinT}℃ -${data[0].MaxT}℃ `;
     weatherStatus.textContent = `${data[0].Wx}`;
+    if (data[0].Wx.includes("雲")) {
+      weatherIcon.textContent = "cloud";
+    }
+    if (data[0].Wx.includes("雨")) {
+      weatherIcon.textContent = "rainy";
+    }
   });
 });
 // 20-300
@@ -168,6 +179,12 @@ d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
 
     temparature.textContent = `${data[0].MinT}℃ -${data[0].MaxT}℃ `;
     weatherStatus.textContent = `${data[0].Wx}`;
+    if (data[0].Wx.includes("雲")) {
+      weatherIcon.textContent = "cloud";
+    }
+    if (data[0].Wx.includes("雨")) {
+      weatherIcon.textContent = "rainy";
+    }
   });
 });
 
