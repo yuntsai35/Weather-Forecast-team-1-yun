@@ -10,7 +10,7 @@
 
 ## 使用技術
 - 前端使用：HTML、CSS、JavaScript、D3.js、Chart.js
-- 後端使用：Python、FastAPI
+- 後端使用：Python、FastAPI、MVC 模式檔案管理
 - 使用 Git Flow 掌控開發流程及版本控制
 - 串接 Discord Webhook
 - 使用 AWS EC2 部署網站

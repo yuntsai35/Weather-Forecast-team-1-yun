@@ -33,6 +33,45 @@ let allRainfallData = null;
 export function initDataSection() {
   renderCountyDropdown();
 
+  const weatherBtn = document.querySelector("#weatherBtn");
+  if (weatherBtn) {
+    weatherBtn.addEventListener("click", function () {
+      const countyTitle = document.querySelector(".cityTitle");
+
+      if (countyTitle && countyTitle.textContent) {
+        // 只取縣市名稱
+        const fullText = countyTitle.textContent.trim();
+        const selectedCounty = fullText.split(/\s+/)[0]; // 用空白分割，取第一個
+
+        // 檢查該縣市是否存在於 countyApiMap
+        if (countyApiMap[selectedCounty]) {
+          console.log("找到對應的縣市，準備選擇..."); // 確認有找到縣市
+
+          // 自動選擇該縣市
+          selectCounty(selectedCounty);
+
+          // 延遲滾動
+          setTimeout(() => {
+            const dataSection = document.querySelector(".data-section");
+            if (dataSection) {
+              const rect = dataSection.getBoundingClientRect();
+              const scrollTop =
+                window.pageYOffset || document.documentElement.scrollTop;
+              const targetPosition = rect.top + scrollTop;
+
+              window.scrollTo({
+                top: targetPosition,
+                behavior: "smooth",
+              });
+            }
+          }, 150);
+        } else {
+          console.warn(`找不到對應的縣市：${selectedCounty}`);
+        }
+      }
+    });
+  }
+
   const countyBtn = document.querySelector("#county-btn");
   const countyOptions = document.getElementById("county-options");
   if (countyBtn) {
@@ -67,11 +106,13 @@ export function initDataSection() {
     const weatherWrap = document.querySelector(".weather-wrap");
     const rainfallDataWrap = document.querySelector(".rainfall-data-wrap");
     const areaBtn = document.querySelector("#area-btn");
+    const discordBtn = document.querySelector("#discord-btn");
 
     if (button === "weekly") {
       weeklyBtn.classList.add("active");
       rainfallBtn.classList.remove("active");
       areaBtn.classList.remove("is-hidden");
+      discordBtn.classList.remove("is-hidden");
 
       weatherWrap.hidden = false;
       rainfallDataWrap.hidden = true;
@@ -79,6 +120,7 @@ export function initDataSection() {
       weeklyBtn.classList.remove("active");
       rainfallBtn.classList.add("active");
       areaBtn.classList.add("is-hidden");
+      discordBtn.classList.add("is-hidden");
 
       weatherWrap.hidden = true;
       rainfallDataWrap.hidden = false;
