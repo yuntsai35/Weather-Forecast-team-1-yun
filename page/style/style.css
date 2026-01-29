@@ -88,9 +88,9 @@ main {
 .countyInformation__right {
   width: 50%;
   height: 850px;
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
 }
 .county {
   fill: white;
@@ -123,6 +123,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 300px;
 }
 .reminder {
   color: grey;
@@ -144,7 +145,7 @@ main {
   margin-bottom: 20px;
 }
 .informationBar {
-  width: 100%;
+  width: 50%;
   height: 240px;
   padding: 5px;
   display: flex;
@@ -159,7 +160,7 @@ main {
   padding: 5px;
 }
 #weatherBtn {
-  width: 100%;
+  width: 50%;
   background-color: #98c1d9;
   border: 1px solid white;
   padding-top: 10px;
@@ -173,6 +174,75 @@ main {
 }
 /* =========== */
 @media screen and (min-width: 992px) {
+}
+@media (max-width: 1250px) {
+  .leftTitle {
+    margin-left: 50px;
+  }
+}
+@media (max-width: 950px) {
+  .mapInformation {
+    max-width: 950px;
+    height: auto;
+    display: block;
+    position: relative;
+  }
+  .map__left {
+    width: 100%;
+    height: 850px;
+    overflow: hidden;
+    margin: auto;
+    /* border: 1px solid black; */
+  }
+  .countyInformation__right {
+    width: 100%;
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .map__small--up {
+    width: 150px;
+    height: 100px;
+    overflow: hidden;
+    position: absolute;
+    bottom: 80%;
+    left: 15%;
+    border: 1px solid black;
+    z-index: 10;
+  }
+  .map__small--down {
+    width: 100px;
+    height: 80px;
+    overflow: hidden;
+    position: absolute;
+    bottom: 70%;
+    left: 15%;
+    border: 1px solid black;
+    z-index: 10;
+  }
+  .countyInformation__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+    width: 100%;
+    position: relative;
+  }
+  .informationBar {
+    width: 30%;
+  }
+  .informationWord {
+    width: 40%;
+  }
+  #weatherBtn {
+    width: 29%;
+    position: absolute;
+    bottom: -20%;
+  }
+  /* .cityTitle {
+    white-space: nowrap;
+  } */
 }
 
 @media (max-width: 360px) {
