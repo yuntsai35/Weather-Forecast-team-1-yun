@@ -296,8 +296,326 @@
     display: none;
 }
 
+@media (min-width: 768px) and (max-width: 1280px) {
+    .data-section{
+        padding: 0 30px;
+    }
+}
+
+@media (min-width: 361px) and (max-width: 767px) {
+    .data-section{
+        padding: 0 30px;
+    }
+    .select-nav{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media (max-width:767px){
+    /* 平板以下資料表改為卡片式 */
+    /* Weekly Table */
+    /* 隱藏表頭 */
+    .weekly-data-table__header--wrap{
+        display: none;
+    }
+
+    /* 移除表格預設樣式 */
+    .weekly-data-table {
+        display: block;
+        border: none;
+        box-shadow: none;
+    }
+    
+    .weekly-data-table tbody {
+        display: block;
+    }
+    
+    /* 每個日期區塊改為卡片 */
+    .date-group .weekly-data-table {
+        background: var(--color-white-100);
+        border: 1px solid var(--color-zinc-200);
+        box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+    
+    /* 每一行改為卡片內容 */
+    .date-row {
+        display: block;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--color-zinc-200);
+    }
+    
+    .date-row:last-child {
+        border-bottom: none;
+    }
+    
+    .date-row:first-child td {
+        border-bottom: none;
+    }
+    
+    /* 重置所有 td 的寬度設定 */
+    .weekly-data-table td {
+        width: 100% !important;
+        text-align: left !important;
+    }
+    
+    /* 日期欄位 - 置頂顯示 */
+    .date-cell {
+        display: block !important;
+        text-align: center !important;
+        padding: 0 0 16px 0 !important;
+        border-bottom: 2px solid var(--color-zinc-200) !important;
+        margin-bottom: 12px;
+    }
+    
+    .date-info {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .date {
+        font-size: 20px;
+        font-weight: var(--font-weight-500);
+    }
+    
+    .weekday {
+        font-size: 20px;
+    }
+    
+    /* 其他欄位改為 block 排列 */
+    .date-row td:not(.date-cell) {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        width: 100% !important;
+        padding: 8px 0 !important;
+    }
+    
+    /* 時間 icon */
+    .time-cell {
+        margin-bottom: 8px;
+    }
+    
+    .time-cell::before {
+        content: "時段：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    .time-cell .material-symbols-outlined {
+        font-size: 20px;
+    }
+    
+    /* 第一行（有日期欄位）：日期之後的 td */
+    /* 時間 (第2個td) */
+    .date-row:first-child td:nth-child(2)::before {
+        content: "時段：";
+    }
+    
+    /* 天氣 (第3個td) */
+    .date-row:first-child td:nth-child(3)::before {
+        content: "天氣：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 降雨機率 (第4個td) */
+    .date-row:first-child td:nth-child(4)::before {
+        content: "降雨機率：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 溫度 (第5個td) */
+    .date-row:first-child td:nth-child(5)::before {
+        content: "溫度：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 濕度 (第6個td) */
+    .date-row:first-child td:nth-child(6)::before {
+        content: "濕度：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 第二行之後（沒有日期欄位）：td順序往前移 */
+    /* 時間 (第1個td) */
+    .date-row:not(:first-child) td:nth-child(1)::before {
+        content: "時段：";
+    }
+    
+    /* 天氣 (第2個td) */
+    .date-row:not(:first-child) td:nth-child(2)::before {
+        content: "天氣：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 降雨機率 (第3個td) */
+    .date-row:not(:first-child) td:nth-child(3)::before {
+        content: "降雨機率：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 溫度 (第4個td) */
+    .date-row:not(:first-child) td:nth-child(4)::before {
+        content: "溫度：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 濕度 (第5個td) */
+    .date-row:not(:first-child) td:nth-child(5)::before {
+        content: "濕度：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 調整 chart 高度 */
+    .chart-wrap {
+        height: 300px;
+    }
+
+    /* 平板以下資料表改為卡片式 */
+    /* Rainfall Table */
+    .rainfall-data-table__header--wrap{
+        display: none;
+    }
+
+    /* 移除雨量表格預設樣式 */
+    .rainfall-data-table {
+        display: block;
+        border: none;
+        box-shadow: none;
+    }
+    
+    .rainfall-data-table tbody {
+        display: block;
+    }
+    
+    /* 每個測站改為卡片 */
+    .area-group .rainfall-data-table {
+        background: var(--color-white-100);
+        border: 1px solid var(--color-zinc-200);
+        box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+    
+    /* 資料行改為卡片內容 */
+    .data-row {
+        display: block;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+    }
+    
+    /* 重置所有 td 的寬度設定 */
+    .rainfall-data-table td {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        width: 100% !important;
+        padding: 8px 0 !important;
+        text-align: left !important;
+    }
+    
+    /* 測站名稱 - 置頂顯示 */
+    .data-row td:nth-child(1) {
+        display: block !important;
+        text-align: center !important;
+        font-size: 18px;
+        font-weight: var(--font-weight-500);
+        padding: 0 0 16px 0 !important;
+        border-bottom: 2px solid var(--color-zinc-200);
+        margin-bottom: 12px;
+        color: var(--color-zinc-600);
+    }
+    
+    .data-row td:nth-child(1)::before {
+        content: none;
+    }
+    
+    /* 即時雨量 (第2個td) */
+    .data-row td:nth-child(2)::before {
+        content: "即時雨量：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 10分鐘雨量 (第3個td) */
+    .data-row td:nth-child(3)::before {
+        content: "10分鐘雨量：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 1小時雨量 (第4個td) */
+    .data-row td:nth-child(4)::before {
+        content: "1小時雨量：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 3小時雨量 (第5個td) */
+    .data-row td:nth-child(5)::before {
+        content: "3小時雨量：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 6小時雨量 (第6個td) */
+    .data-row td:nth-child(6)::before {
+        content: "6小時雨量：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 12小時雨量 (第7個td) */
+    .data-row td:nth-child(7)::before {
+        content: "12小時雨量：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+    
+    /* 24小時雨量 (第8個td) */
+    .data-row td:nth-child(8)::before {
+        content: "24小時雨量：";
+        font-weight: var(--font-weight-500);
+        color: var(--color-zinc-600);
+    }
+}
+
 @media (max-width:360px){
+    .select-nav{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
     .dropdowns-wrap{
         flex-direction: column;
+    }
+
+    .dropdown__trigger{
+        width: 100%;
+    }
+
+    .buttons-wrap{
+        flex-direction: column;
+    }
+
+    #weekly-btn, #rainfall-btn, #discord-btn{
+        height: 30px;
     }
 }

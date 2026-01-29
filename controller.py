@@ -7,6 +7,7 @@ from dhooks import Webhook, Embed
 from fastapi import * 
 from fastapi.responses import FileResponse
 from fastapi.responses import JSONResponse
+import random
 
 import data as weatherdata
 
@@ -109,18 +110,29 @@ def get_weekly_weather(body: dict = Body(...)):
     weather_data = weatherdata.discord_data(data_json)
 
     for data in weather_data:
-
+        
         field_name= f'> **{data["date"]}**'
         field_value = (
                 f"🌡️ 溫度 {data["Temperature"]} ℃\n"
                 f"💧 濕度 {data["RelativeHumidity"]}%\n"
                 f"🌧️ 降雨 {data["ProbabilityOfPrecipitation"]}%\n"
-                f"☀️ 天氣 {data["Weather"]}"
+                f"🌞 天氣 {data["Weather"]}"
                     )
         embed.add_field(name=field_name, value=field_value, inline=True)
 
-    radar_url = "https://cdn.discordapp.com/attachments/1465949592800591894/1466133485885329448/beautiful-pink-sakura.jpg?ex=697ba2b6&is=697a5136&hm=7a6d5a0e9bdedd5b713bfcae61f9e93c9f94bbf84c35048dff3b25aac838c191&" 
-    embed.set_image(url=radar_url)
+    photo_list=["https://www.ysnp.gov.tw/UploadPlugin?file=Q2pJlnjLaSR%2B2JyU0VncS4imBSf%2FobUg0HQcg0cINdQ%2FHHolC9hKptZD6UAeHxSoRthZlmILuyPnVFQ0GTG8Hw%3D%3D",
+               "https://cdn.discordapp.com/attachments/1465949592800591894/1466311355274367049/20161013090605260915428.png?ex=697c485d&is=697af6dd&hm=0d8811680d6d9c4900c36aa82e2ae7a96af770288973a8ef61db9d68825afe53&",
+               "https://cdn.discordapp.com/attachments/1465949592800591894/1466312788153733395/pic_650_20.png?ex=697c49b3&is=697af833&hm=defa2bdeee4139780300833069bc6cdd9e9b983d334724b2e133042dab80c9cd&",
+               "https://www.ysnp.gov.tw/UploadPlugin?file=Q2pJlnjLaSR%2B2JyU0VncS4imBSf%2FobUg0HQcg0cINdQ3gk2zV9OFG4Kbzceexy%2FxliRLY2jxhXNs3xIGmCxr3Q%3D%3D",
+               "https://www.ysnp.gov.tw/UploadPlugin?file=Q2pJlnjLaSR%2B2JyU0VncS4imBSf%2FobUg0HQcg0cINdRtIvgLm8sp%2BaaNqTU%2B9cd%2Bay65qTWZA9tNRqFecT1oHg%3D%3D",
+               "https://www.ysnp.gov.tw/UploadPlugin?file=Q2pJlnjLaSR%2B2JyU0VncS4imBSf%2FobUg0HQcg0cINdSYkRA5hHW%2B3q2SG418jTZTrvXG110tiqveWsigLJLIYw%3D%3D",
+               "https://www-ws.gov.taipei/001/Upload/308/relpic/42208/7572378/39dbebeb-d4f8-4159-b6cc-120c1ec503ef.jpg",
+               "https://www-ws.gov.taipei/001/Upload/308/relpic/42208/7572378/f5cce66c-e9ff-429b-8db8-ac18a283368b.jpg",
+               "https://www.ali-nsa.net/content/images/static/unit-trail-02.jpg"
+               ]
+
+    random_photo = random.choice(photo_list)
+    embed.set_image(random_photo)
 
     embed.set_footer(text='資料來源: 中央氣象局')
     hook.send("# 感謝您使用本網站 😊\n以下為一週白天天氣預報", embeds=[embed]) 
