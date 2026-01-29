@@ -293,3 +293,33 @@ main {
     display: none;
   }
 }
+@media (max-width: 360px) {
+  main {
+    padding: 0 30px;
+  }
+  .mapInformation {
+    width: 100%;
+  }
+  .map__small--up {
+    bottom: 80%;
+    left: -5%;
+  }
+  .map__small--down {
+    bottom: 65%;
+    left: -5%;
+  }
+  .svg__big g {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: translate(-750px, 0px);
+  }
+  .topbar {
+    justify-content: center;
+  }
+  .leftTitle {
+    margin-left: 0;
+  }
+  .countyInformation__right {
+    display: none;
+  }
+}
