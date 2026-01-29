@@ -38,7 +38,7 @@ export function initChart(timeData, locationName, countyName) {
             label: "白天高溫",
             data: temperatureData.dayTemps,
             borderColor: "#FF6B35",
-            backgroundColor: "rgba(255, 107, 53, 0.1)",
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
             borderWidth: 3,
             tension: 0.4, // 曲線平滑度
             fill: true,
@@ -52,7 +52,7 @@ export function initChart(timeData, locationName, countyName) {
             label: "晚上低溫",
             data: temperatureData.nightTemps,
             borderColor: "#4FC3F7",
-            backgroundColor: "rgba(79, 195, 247, 0.1)",
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
             borderWidth: 3,
             tension: 0.4,
             fill: true,
