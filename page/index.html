@@ -20,7 +20,11 @@
     <title>全國即時氣象</title>
   </head>
   <body>
-    <header></header>
+    <header class="topbar__whole">
+      <div class="topbar">
+        <h1 class="leftTitle">全國即時氣象</h1>
+      </div>
+    </header>
     <main>
       <!-- 之後引入 Taiwan Map -->
       <section class="map-section">
@@ -36,12 +40,11 @@
           </div>
           <div class="countyInformation__right">
             <div class="countyInformation__content">
-              <h1 class="cityTitle">全國　天氣概況</h1>
-              <p>點擊至各縣市地圖查看天氣概況</p>
+              <h1 class="cityTitle">全國　　天氣概況</h1>
+              <p class="reminder">點擊至各縣市地圖查看天氣概況</p>
               <div class="informationBar">
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
+                <p class="temparature"></p>
+                <p class="status"></p>
               </div>
               <button type="button" id="weatherBtn">查看鄉鎮天氣</button>
             </div>

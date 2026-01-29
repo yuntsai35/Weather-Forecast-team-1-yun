@@ -4,54 +4,18 @@ const svg = d3.select(".svg__big");
 const g = svg.append("g");
 const width = +svg.attr("width");
 const height = +svg.attr("height");
-const cityApiMap = {
-  宜蘭縣: "/v1/rest/datastore/F-D0047-003",
-  桃園市: "/v1/rest/datastore/F-D0047-007",
-  新竹縣: "/v1/rest/datastore/F-D0047-011",
-  苗栗縣: "/v1/rest/datastore/F-D0047-015",
-  彰化縣: "/v1/rest/datastore/F-D0047-019",
-  南投縣: "/v1/rest/datastore/F-D0047-023",
-  雲林縣: "/v1/rest/datastore/F-D0047-027",
-  嘉義縣: "/v1/rest/datastore/F-D0047-031",
-  屏東縣: "/v1/rest/datastore/F-D0047-035",
-  臺東縣: "/v1/rest/datastore/F-D0047-039",
-  花蓮縣: "/v1/rest/datastore/F-D0047-043",
-  澎湖縣: "/v1/rest/datastore/F-D0047-047",
-  基隆市: "/v1/rest/datastore/F-D0047-051",
-  新竹市: "/v1/rest/datastore/F-D0047-055",
-  嘉義市: "/v1/rest/datastore/F-D0047-059",
-  臺北市: "/v1/rest/datastore/F-D0047-063",
-  高雄市: "/v1/rest/datastore/F-D0047-067",
-  新北市: "/v1/rest/datastore/F-D0047-071",
-  臺中市: "/v1/rest/datastore/F-D0047-075",
-  臺南市: "/v1/rest/datastore/F-D0047-079",
-  連江縣: "/v1/rest/datastore/F-D0047-083",
-  金門縣: "/v1/rest/datastore/F-D0047-087",
+let temparature = document.querySelector(".temparature");
+let weatherStatus = document.querySelector(".status");
+const render = async function () {
+  const urlOrigin = "/v1/rest/datastore/F-C0032-001?locationName=臺北市";
+  const req = await fetch(urlOrigin);
+
+  const response = await req.json();
+  const data = response.data;
+  temparature.textContent = `${data[0].MinT}℃ -${data[0].MaxT}℃ `;
+  weatherStatus.textContent = `${data[0].Wx}`;
 };
-const areaApiMap = {
-  嘉義縣: 0,
-  新北市: 1,
-  嘉義市: 2,
-  新竹縣: 3,
-  新竹市: 4,
-  臺北市: 5,
-  臺南市: 6,
-  宜蘭縣: 7,
-  苗栗縣: 8,
-  雲林縣: 9,
-  花蓮縣: 10,
-  臺中市: 11,
-  臺東縣: 12,
-  桃園市: 13,
-  南投縣: 14,
-  高雄市: 15,
-  金門縣: 16,
-  屏東縣: 17,
-  基隆市: 18,
-  澎湖縣: 19,
-  彰化縣: 20,
-  連江縣: 21,
-};
+render();
 
 // 本島+澎湖
 d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
@@ -85,22 +49,19 @@ d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
   cities.forEach((path) => {
     path.addEventListener("click", async () => {
       const county = path.dataset.county;
-      const url = "/v1/rest/datastore/F-C0032-001";
+      const url = `/v1/rest/datastore/F-C0032-001?locationName=${county}`;
 
       const req = await fetch(url);
 
       const response = await req.json();
-      console.log(response.data[areaApiMap[`${county}`]]);
+      const data = response.data;
+      console.log(data);
 
       cityTitle.textContent = "";
       cityTitle.textContent = `${county}　天氣概況`;
 
-      const btnText = document.getElementById("county-name");
-      const weatherBtn = document.getElementById("weatherBtn");
-      weatherBtn.addEventListener("click", () => {
-        const cityName = cityTitle.textContent.slice(0, 3);
-        btnText.textContent = cityName;
-      });
+      temparature.textContent = `${data[0].MinT}℃ -${data[0].MaxT}℃ `;
+      weatherStatus.textContent = `${data[0].Wx}`;
     });
   });
 });
@@ -127,10 +88,30 @@ d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
     .attr("d", pathGenerator)
     .attr("class", "country")
     .attr("data-id", (d) => d.properties.COUNTYID)
+    .attr("data-county", (d) => d.properties.COUNTYNAME)
     .append("title")
     .text((d) => d.properties.COUNTYNAME); // tooltip
 
   g1.attr("transform", "translate(20, -300) scale(0.5)");
+
+  // 獲取API
+  const island1 = document.querySelector(".country");
+  const cityTitle = document.querySelector(".cityTitle");
+  island1.addEventListener("click", async () => {
+    const county = island1.dataset.county;
+    const url = `/v1/rest/datastore/F-C0032-001?locationName=${county}`;
+
+    const req = await fetch(url);
+    const response = await req.json();
+    const data = response.data;
+    console.log(data);
+
+    cityTitle.textContent = "";
+    cityTitle.textContent = `${county}　天氣概況`;
+
+    temparature.textContent = `${data[0].MinT}℃ -${data[0].MaxT}℃ `;
+    weatherStatus.textContent = `${data[0].Wx}`;
+  });
 });
 // 20-300
 // 金門縣
@@ -156,10 +137,30 @@ d3.json("/page/map_data/COUNTY_MOI_1140317.json").then((data) => {
     .attr("d", pathGenerator)
     .attr("class", "country2")
     .attr("data-id", (d) => d.properties.COUNTYID)
+    .attr("data-county", (d) => d.properties.COUNTYNAME)
     .append("title")
     .text((d) => d.properties.COUNTYNAME); // tooltip
 
   g2.attr("transform", "translate(-60, -385) scale(0.5)");
+
+  // 獲取API
+  const island2 = document.querySelector(".country2");
+  const cityTitle = document.querySelector(".cityTitle");
+  island2.addEventListener("click", async () => {
+    const county = island2.dataset.county;
+    const url = `/v1/rest/datastore/F-C0032-001?locationName=${county}`;
+
+    const req = await fetch(url);
+    const response = await req.json();
+    const data = response.data;
+    console.log(data);
+
+    cityTitle.textContent = "";
+    cityTitle.textContent = `${county}　天氣概況`;
+
+    temparature.textContent = `${data[0].MinT}℃ -${data[0].MaxT}℃ `;
+    weatherStatus.textContent = `${data[0].Wx}`;
+  });
 });
 
 // svg 定位

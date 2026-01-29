@@ -1,9 +1,17 @@
-.footer{
-    background: var(--color-primary-600);
-    padding: 55px;
+.topbar__whole {
+  max-width: 1920px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-primary-600);
+}
+.footer {
+  background: var(--color-primary-600);
+  padding: 55px;
 }
 
-.footer > p{
-    text-align: center;
-    color: var(--color-white-100);
+.footer > p {
+  text-align: center;
+  color: var(--color-white-100);
 }
