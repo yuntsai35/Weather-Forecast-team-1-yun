@@ -8,6 +8,8 @@
 - 點擊雨量觀測可查看各縣市即時雨量觀測資料
 - 點擊按鈕可將指定區域一週天氣發送至 Discord
 
+![Demo](/page/image/Demo.gif)
+
 ## 使用技術
 - 前端使用：HTML、CSS、JavaScript、D3.js、Chart.js
 - 後端使用：Python、FastAPI、MVC 模式檔案管理
