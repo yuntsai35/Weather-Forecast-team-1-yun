@@ -6,7 +6,7 @@
     align-items: center;
     border: none;
     border: 5px;
-    padding: 3px 12px;
+    padding: 8px 14px;
     opacity: 1;
     background-color: transparent;
     cursor: pointer;
@@ -18,8 +18,28 @@
     border-radius: 5px;
 }
 
-.btn--primary:hover{
+.btn--primary:hover:not(:disabled){
     background-color: var(--color-primary-600);
+}
+
+.btn--primary.active{
+    background-color: var(--color-primary-600);
+}
+
+.btn--primary:disabled{
+    background-color: var(--color-zinc-200);
+    color: var(--color-zinc-600);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn--primary:disabled:hover{
+    background-color: var(--color-zinc-300);
+    transform: none;
+}
+
+.btn--primary.is-hidden{
+    display: none;
 }
 
 .btn--primary--outline{
@@ -39,10 +59,10 @@
 }
 
 .dc-icon img{
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    padding: 1px;
+    object-fit: contain;
 }
 
 .select-nav{
@@ -54,6 +74,12 @@
 .dropdowns-wrap, .buttons-wrap{
     display: flex;
     gap: 20px;
+    align-items: center;
+}
+
+/* 給下拉選單容器添加相對定位 */
+.dropdowns-wrap__item {
+    position: relative;
 }
 
 .dropdown__trigger{
@@ -61,6 +87,13 @@
     background: var(--color-white-100);
     border-radius: 5px;
     color: var(--color-zinc-600);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px;
+    min-width: 150px;
+    width: 100%;
 }
 
 .dropdown__options {
@@ -72,28 +105,35 @@
     max-height: 300px;
     overflow-y: auto;
     z-index: 10;
+    margin-top: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown__options li {
-    width: 105px;
+    width: 100%;
     padding: 8px 12px;
     cursor: pointer;
+    box-sizing: border-box;
 }   
 
 .dropdown__options li:hover {
-    background: #f0f0f0;
+    background: var(--color-zinc-200);
 }
 
 .dropdown__options.is-open {
     display: block;
-    width: 103px;
-    overflow: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
 .dropdown__icon{
-    font-size: 16px;
-    margin-top: 5px;
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+/* icon 旋轉 */
+.dropdown__trigger:has(+ .dropdown__options.is-open) .dropdown__icon{
+    transform: rotate(180deg);
 }
 
 /* Chart */
@@ -171,7 +211,8 @@
     margin-bottom: 20px;
 }
 
-.date-group--empty{
+/* 空狀態提示 */
+.date-group--empty, .empty-content{
     border: 1px solid var(--color-zinc-200);
     box-shadow:  rgba(0, 0, 0, 0.09) 0px 3px 12px;
     border-radius: 5px;
@@ -285,11 +326,6 @@
     border: none;
     vertical-align: middle;
     color: var(--color-zinc-600);
-}
-
-/* 動作 */
-.active{
-    background-color: var(--color-primary-600);
 }
 
 .is-hidden{
@@ -607,7 +643,7 @@
         flex-direction: column;
     }
 
-    .dropdown__trigger{
+    .dropdowns-wrap__item {
         width: 100%;
     }
 
@@ -616,6 +652,6 @@
     }
 
     #weekly-btn, #rainfall-btn, #discord-btn{
-        height: 30px;
+        width: 100%;
     }
 }
