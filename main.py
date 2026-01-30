@@ -13,5 +13,3 @@ async def index(request: Request):
 	return FileResponse("./page/index.html", media_type="text/html")
 
 app.include_router(weather_router)
-
-print("app")
